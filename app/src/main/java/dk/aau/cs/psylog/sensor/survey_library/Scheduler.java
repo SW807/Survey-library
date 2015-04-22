@@ -1,4 +1,4 @@
-package dk.aau.cs.psylog.survey_library;
+package dk.aau.cs.psylog.sensor.survey_library;
 
 import android.app.NotificationManager;
 import android.app.Service;
