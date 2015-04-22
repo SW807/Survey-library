@@ -1,5 +1,6 @@
 package dk.aau.cs.psylog.survey_library;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +13,22 @@ import java.util.Comparator;
 import java.util.Date;
 
 public class Scheduler extends Service {
-    private ArrayList<Task> tasks;
+    private ArrayList<IScheduled> tasks;
     final Thread thread = new Thread(new RunTask(this));
 
     @Override
     public void onCreate() {
-        tasks = new ArrayList<Task>();
+        tasks = new ArrayList();
+        initialize();
+        sortAfterTime();
         super.onCreate();
+    }
+
+    private void initialize()
+    {
+        Stemningsregistrering s = new Stemningsregistrering(this);
+
+        tasks.add(s);
     }
 
     @Override
@@ -46,24 +56,30 @@ public class Scheduler extends Service {
         @Override
         public void run() {
             while (true) {
-                Task task = tasks.get(0);
                 sleep();
+                IScheduled task = tasks.get(0);
+
                 // Show question or other activity
-                // Update task time
+                NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                mNotifyMgr.notify(1, task.getNotification());
+
+                //Update task
+                task.updateTime();
+                sortAfterTime();
             }
         }
 
         private void sleep(){
-            long diff = tasks.get(0).getNextTime() - new Date().getTime();
+            long diff = tasks.get(0).getTime() - new Date().getTime();
             if (diff > 0)
                 SystemClock.sleep(diff);
         }
     }
 
-    private class TaskComparator implements Comparator<Task> {
+    private class TaskComparator implements Comparator<IScheduled> {
         @Override
-        public int compare(Task lhs, Task rhs) {
-            return lhs.getNextTime().compareTo(rhs.getNextTime());
+        public int compare(IScheduled lhs, IScheduled rhs) {
+            return lhs.getTime().compareTo(rhs.getTime());
         }
     }
 
