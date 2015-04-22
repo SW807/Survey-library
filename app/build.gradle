@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "dk.aau.cs.psylog.template"
+        applicationId "dk.aau.cs.psylog.sensor.survey_library"
         minSdkVersion 21
         targetSdkVersion 21
         versionCode 1
