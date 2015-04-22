@@ -1,0 +1,53 @@
+{
+  "name": "survey_library",
+  "_version": 1.0,
+  "tables": [
+    {
+      "name": "questions",
+      "columns": [
+        { "name": "question_ID", "dataType": "INTEGER"},
+		{ "name": "question_type_ID", "dataType": "INTEGER"},
+		{ "name": "question_text", "dataType": "TEXT"}
+
+      ]
+    },
+    {
+      "name": "answers",
+      "columns": [
+        { "name": "question_id", "dataType": "INTEGER"},
+        { "name": "answer", "dataType": "INTEGER"}
+      ]
+    },
+    {
+          "name": "multiple_choice_choices",
+          "columns": [
+            { "name": "choice_id", "dataType": "INTEGER"},
+            { "name": "choice_text", "dataType": "TEXT"}
+          ]
+    },
+    {
+        "name": "multiple_choice",
+            "columns": [
+                { "name": "question_id", "dataType": "INTEGER"},
+                { "name": "choice_id", "dataType": "INTEGER"}
+              ]
+    },
+    {
+              "name": "number_range",
+              "columns": [
+                { "name": "question_id", "dataType": "INTEGER"},
+                { "name": "min", "dataType": "INTEGER"},
+                { "name": "max", "dataType": "INTEGER"},
+                { "name": "min_label", "dataType": "TEXT"},
+                { "name": "max_label", "dataType": "TEXT"}
+        ]
+    },
+    {
+        "name": "plain_text",
+            "columns": [
+                { "name": "question_id", "dataType": "INTEGER"},
+                { "name": "text", "dataType": "TEXT"}
+            ]
+        }
+  ]
+}
