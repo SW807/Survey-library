@@ -5,8 +5,8 @@
     {
       "name": "questions",
       "columns": [
-        { "name": "question_ID", "dataType": "INTEGER"},
-		{ "name": "question_type_ID", "dataType": "INTEGER"},
+        { "name": "question_id", "dataType": "INTEGER"},
+		{ "name": "question_type_id", "dataType": "INTEGER"},
 		{ "name": "question_text", "dataType": "TEXT"}
 
       ]
