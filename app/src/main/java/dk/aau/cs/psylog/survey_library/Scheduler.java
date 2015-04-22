@@ -31,6 +31,16 @@ public class Scheduler extends Service {
         tasks.add(s);
     }
 
+    public void add(IScheduled task){
+        tasks.add(task);
+        sortAfterTime();
+    }
+
+    public void remove(IScheduled task){
+        tasks.remove(task);
+        sortAfterTime();
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         thread.start();
