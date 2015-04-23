@@ -29,7 +29,8 @@
         "name": "multiple_choice",
             "columns": [
                 { "name": "question_id", "dataType": "INTEGER"},
-                { "name": "choice_id", "dataType": "INTEGER"}
+                { "name": "choice_id", "dataType": "INTEGER"},
+                { "name": "single_selection", "dataType": "INTEGER"}
               ]
     },
     {
