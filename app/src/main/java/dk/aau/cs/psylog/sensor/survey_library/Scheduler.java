@@ -26,9 +26,9 @@ public class Scheduler extends Service {
 
     private void initialize()
     {
-        Stemningsregistrering s = new Stemningsregistrering(this);
+        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"});
 
-        tasks.add(s);
+        tasks.add(multipleChoiceQuestion);
     }
 
     public void add(IScheduled task){
@@ -80,7 +80,7 @@ public class Scheduler extends Service {
         }
 
         private void sleep(){
-            long diff = tasks.get(0).getTime() - new Date().getTime();
+            Long diff = tasks.get(0).getTime() - new Date().getTime();
             if (diff > 0)
                 SystemClock.sleep(diff);
         }

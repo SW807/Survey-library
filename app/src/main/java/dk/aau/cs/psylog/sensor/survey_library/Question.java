@@ -13,6 +13,7 @@ public abstract class Question implements IScheduled {
     public Question(String text, QuestionType questionType) {
         this.text = text;
         this.questionType = questionType;
+        updateTime();
     }
 
     protected Notification.Builder getNotifcationBuilder(Context context, int icon) {
@@ -25,6 +26,7 @@ public abstract class Question implements IScheduled {
 
     protected PendingIntent getPendingIntent(Context context, Class<?> _class) {
         Intent resultIntent = new Intent(context, _class);
-        return PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_ONE_SHOT);
+        resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }
