@@ -58,9 +58,9 @@ public class Scheduler extends Service {
 
     private class RunTask implements Runnable {
 
-        Context ctx;
-        private RunTask(Context ctx) {
-            this.ctx = ctx;
+        Context context;
+        private RunTask(Context context) {
+            this.context = context;
         }
 
         @Override
@@ -71,7 +71,7 @@ public class Scheduler extends Service {
 
                 // Show question or other activity
                 NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                mNotifyMgr.notify(1, task.getNotification());
+                mNotifyMgr.notify(1, task.getNotification(context));
 
                 //Update task
                 task.updateTime();
