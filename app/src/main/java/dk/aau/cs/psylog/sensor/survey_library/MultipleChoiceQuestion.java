@@ -3,10 +3,14 @@ package dk.aau.cs.psylog.sensor.survey_library;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.util.Log;
+
+import java.util.Calendar;
 
 public class MultipleChoiceQuestion extends Question{
     private String[] choices;
     private boolean singleSelection;
+    private Long time;
 
     public MultipleChoiceQuestion(String text, boolean singleSelection, String[] choices){
         super(text, QuestionType.MULTIPLE_CHOICE);
@@ -16,17 +20,20 @@ public class MultipleChoiceQuestion extends Question{
 
     @Override
     public Long getTime() {
-        return null;
+        return time;
     }
 
     @Override
     public void updateTime() {
-
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.SECOND, 5);
+        time = now.getTimeInMillis();
     }
 
     @Override
     public Notification getNotification(Context context) {
         Notification.Builder notificationBuilder = getNotifcationBuilder(context, android.R.drawable.ic_popup_reminder);
+        Log.d("DIALOG", "Nu sætter vi dialogen.");
         PendingIntent pendingIntent = getPendingIntent(context, MultipleChoiceDialog.class);
         notificationBuilder.setContentIntent(pendingIntent);
         return notificationBuilder.build();
