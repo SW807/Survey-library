@@ -44,4 +44,6 @@ public class DatabaseHelper {
     public void getQuestion(){
 
     }
+
+    public void addChoice(){}
 }
