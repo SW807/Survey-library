@@ -1,5 +1,8 @@
 package dk.aau.cs.psylog.sensor.survey_library;
 
+import android.app.Notification;
+import android.content.Context;
+
 public class NumberRangeQuestion extends Question{
     private int min;
     private int max;
@@ -12,5 +15,20 @@ public class NumberRangeQuestion extends Question{
         this.max = max;
         this.minLabel = minLabel;
         this.maxLabel = maxLabel;
+    }
+
+    @Override
+    public Long getTime() {
+        return null;
+    }
+
+    @Override
+    public void updateTime() {
+
+    }
+
+    @Override
+    public Notification getNotification(Context context) {
+        return null;
     }
 }
