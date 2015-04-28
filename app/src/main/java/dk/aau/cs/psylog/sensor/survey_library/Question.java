@@ -8,8 +8,6 @@ import android.content.Intent;
 public abstract class Question implements IScheduled {
     protected String text;
     private QuestionType questionType;
-    private static final String QUESTION_TITLE = "Psylog spørgsmål:";
-
     public Question(String text, QuestionType questionType) {
         this.text = text;
         this.questionType = questionType;
@@ -18,7 +16,7 @@ public abstract class Question implements IScheduled {
 
     protected Notification.Builder getNotifcationBuilder(Context context, int icon) {
         Notification.Builder builder = new Notification.Builder(context)
-                .setContentTitle(QUESTION_TITLE)
+                .setContentTitle(Constants.DIALOG_TITLE)
                 .setContentText(text)
                 .setSmallIcon(icon);
         return builder;

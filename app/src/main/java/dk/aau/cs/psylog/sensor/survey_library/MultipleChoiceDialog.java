@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+
+import java.util.ArrayList;
 
 public class MultipleChoiceDialog extends DialogFragment {
 
@@ -19,23 +22,36 @@ public class MultipleChoiceDialog extends DialogFragment {
         Bundle intent = this.getActivity().getIntent().getExtras();
 
         String text = intent.getString("text");
-        String[] choices = intent.getStringArray("choices");
+        CharSequence[] choices = intent.getStringArray("choices");
         Boolean singleSelection = intent.getBoolean("singleSelection");
 
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(text)
-                .setPositiveButton("SAHIT", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
-                    }
-                })
-                .setNegativeButton("FUCK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                });
+        builder.setTitle(text);
+
+        boolean[] answers = new boolean[choices.length];
+        int checked =0;
+
+        if(singleSelection) {
+            builder.setSingleChoiceItems(choices,checked,  new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // database
+                }
+            });
+        }
+        else
+        {
+            builder.setMultiChoiceItems(choices,answers, new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                    // database
+                }
+            });
+        }
+
+
         // Create the AlertDialog object and return it
         return builder.create();
     }
