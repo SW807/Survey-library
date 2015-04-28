@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public abstract class Question implements IScheduled {
-    private String text;
+    protected String text;
     private QuestionType questionType;
     private static final String QUESTION_TITLE = "Psylog spørgsmål:";
 
@@ -24,9 +24,11 @@ public abstract class Question implements IScheduled {
         return builder;
     }
 
-    protected PendingIntent getPendingIntent(Context context, Class<?> _class) {
-        Intent resultIntent = new Intent(context, _class);
+        q.addQuestionData(resultIntent);
+
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
+
+    public abstract void addQuestionData(Intent i);
 }

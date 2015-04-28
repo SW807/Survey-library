@@ -5,25 +5,27 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
-public class MultipleChoiceDialog extends DialogFragment implements Parcelable{
+public class MultipleChoiceDialog extends DialogFragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
-        Log.d("DIALOG", "Nu kører onCreate metoden.");
-        show(getFragmentManager(),"TAG");
-
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Log.d("DIALOG", "Nu kører onCreateDialog metoden.");
+        Bundle intent = this.getActivity().getIntent().getExtras();
+
+        String text = intent.getString("text");
+        String[] choices = intent.getStringArray("choices");
+        Boolean singleSelection = intent.getBoolean("singleSelection");
+
+
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("WHAT UP")
+        builder.setMessage(text)
                 .setPositiveButton("SAHIT", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // FIRE ZE MISSILES!
@@ -36,15 +38,5 @@ public class MultipleChoiceDialog extends DialogFragment implements Parcelable{
                 });
         // Create the AlertDialog object and return it
         return builder.create();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
     }
 }

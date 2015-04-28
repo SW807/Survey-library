@@ -3,6 +3,7 @@ package dk.aau.cs.psylog.sensor.survey_library;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -34,8 +35,16 @@ public class MultipleChoiceQuestion extends Question{
     public Notification getNotification(Context context) {
         Notification.Builder notificationBuilder = getNotifcationBuilder(context, android.R.drawable.ic_popup_reminder);
         Log.d("DIALOG", "Nu sætter vi dialogen.");
-        PendingIntent pendingIntent = getPendingIntent(context, MultipleChoiceDialog.class);
+        PendingIntent pendingIntent = getPendingIntent(context, MultipleChoiceDialog.class, this);
         notificationBuilder.setContentIntent(pendingIntent);
         return notificationBuilder.build();
+    }
+
+    @Override
+    public void addQuestionData(Intent i)
+    {
+        i.putExtra("choices",choices);
+        i.putExtra("singleSelection",singleSelection);
+        i.putExtra("text",text);
     }
 }

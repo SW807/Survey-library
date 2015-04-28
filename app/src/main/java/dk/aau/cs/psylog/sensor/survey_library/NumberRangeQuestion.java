@@ -2,6 +2,7 @@ package dk.aau.cs.psylog.sensor.survey_library;
 
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 
 public class NumberRangeQuestion extends Question{
     private int min;
@@ -30,5 +31,10 @@ public class NumberRangeQuestion extends Question{
     @Override
     public Notification getNotification(Context context) {
         return null;
+    }
+
+    @Override
+    public void addQuestionData(Intent i) {
+
     }
 }
