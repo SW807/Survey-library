@@ -24,6 +24,10 @@ public abstract class Question implements IScheduled {
         return builder;
     }
 
+    protected PendingIntent getPendingIntent(Context context, Class<?> _class, Question q) {
+        Intent resultIntent = new Intent(context, TransparentActivity.class);
+        resultIntent.putExtra("class", _class.getName());
+
         q.addQuestionData(resultIntent);
 
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

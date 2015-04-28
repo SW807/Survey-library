@@ -73,6 +73,7 @@ public class Scheduler extends Service {
                 NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 mNotifyMgr.notify(1, task.getNotification(context));
 
+
                 //Update task
                 task.updateTime();
                 sortAfterTime();

@@ -1,10 +1,13 @@
 package dk.aau.cs.psylog.sensor.survey_library;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,22 +16,34 @@ import dk.aau.cs.psylog.survey_library.R;
 
 public class TransparentActivity extends Activity {
 
+    static  String TAG = "TransparentActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transparent);
 
-        MultipleChoiceDialog d = new MultipleChoiceDialog();
-
         try {
             Bundle extras = getIntent().getExtras();
             String classname = extras.getString("class");
-            Class<?> Dialog = Class.forName(classname);
-        }
+            Class<?> DialogType = Class.forName(classname);
 
-        i.getStr
-        d.show();
+
+            DialogFragment dialog  = (DialogFragment)DialogType.newInstance();
+            dialog.show(getFragmentManager(),TAG);
+        }
+        catch(ClassNotFoundException e)
+        {
+            e.printStackTrace();
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
 
     @Override
