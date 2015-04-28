@@ -26,9 +26,9 @@ public class Scheduler extends Service {
 
     private void initialize()
     {
-        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"});
-
-        tasks.add(multipleChoiceQuestion);
+        //MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"});
+        PlainTextQuestion plaintext = new PlainTextQuestion("Skriv en bog");
+        tasks.add(plaintext);
     }
 
     public void add(IScheduled task){

@@ -34,7 +34,6 @@ public class MultipleChoiceQuestion extends Question{
     @Override
     public Notification getNotification(Context context) {
         Notification.Builder notificationBuilder = getNotifcationBuilder(context, android.R.drawable.ic_popup_reminder);
-        Log.d("DIALOG", "Nu sætter vi dialogen.");
         PendingIntent pendingIntent = getPendingIntent(context, MultipleChoiceDialog.class, this);
         notificationBuilder.setContentIntent(pendingIntent);
         return notificationBuilder.build();
