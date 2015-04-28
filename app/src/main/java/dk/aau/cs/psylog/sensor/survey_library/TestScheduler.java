@@ -19,22 +19,9 @@ public class TestScheduler extends Activity {
         super.onCreate(savedInstanceState);
 
 
-        MultipleChoiceQuestion q = new MultipleChoiceQuestion("TExt til notototo", true, new String[]{"hest", "ko", "what up"});
-        Notification noti = q.getNotification(this);
-
-        NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(1, noti);
-
-        Intent i = new Intent(this, TransparentActivity.class);
-        i.putExtra("class","MultipleChoiceDialog");
-        startActivity(i);
-
         setContentView(R.layout.activity_test_scheduler);
 
-        //multipleChoiceDialog.show(getFragmentManager(),"PRIIIICE - TAAAAAGGGGGG");
-
-
-        //startService(new Intent(this, Scheduler.class));
+        startService(new Intent(this, Scheduler.class));
     }
 
     @Override
