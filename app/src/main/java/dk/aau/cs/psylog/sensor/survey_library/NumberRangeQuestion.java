@@ -35,6 +35,11 @@ public class NumberRangeQuestion extends Question{
 
     @Override
     public void addQuestionData(Intent i) {
+        i.putExtra("min",min);
+        i.putExtra("max",max);
+        i.putExtra("minLabel",minLabel);
+        i.putExtra("maxLabel",maxLabel);
+        i.putExtra("text",text);
 
     }
 }

@@ -1,13 +1,17 @@
 package dk.aau.cs.psylog.sensor.survey_library;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-public class PlainTextQuestion extends Question{
+import java.util.Calendar;
 
-    public PlainTextQuestion(String text, QuestionType questionType) {
-        super(text, questionType);
+public class PlainTextQuestion extends Question {
+    private Long time;
+
+    public PlainTextQuestion(String text) {
+        super(text, QuestionType.PLAIN_TEXT);
     }
 
     @Override
@@ -17,17 +21,21 @@ public class PlainTextQuestion extends Question{
 
     @Override
     public Long getTime() {
-        return null;
+        return time;
     }
 
     @Override
     public void updateTime() {
-
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.SECOND, 5);
+        time = now.getTimeInMillis();
     }
 
     @Override
     public Notification getNotification(Context context) {
-
-        return null;
+        Notification.Builder notificationBuilder = getNotifcationBuilder(context, android.R.drawable.ic_popup_reminder);
+        PendingIntent pendingIntent = getPendingIntent(context, PlainTextDialog.class, this);
+        notificationBuilder.setContentIntent(pendingIntent);
+        return notificationBuilder.build();
     }
 }
