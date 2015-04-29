@@ -15,6 +15,7 @@ import java.util.Date;
 public class Scheduler extends Service {
     private ArrayList<IScheduled> tasks;
     final Thread thread = new Thread(new RunTask(this));
+    private int ID = 0;
 
     @Override
     public void onCreate() {
@@ -26,9 +27,12 @@ public class Scheduler extends Service {
 
     private void initialize()
     {
-        //MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"});
+        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"});
         PlainTextQuestion plaintext = new PlainTextQuestion("Skriv en bog");
+        NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Hvor glad er du?", 1, 10, "Ked af det", "Rigtig glad");
         tasks.add(plaintext);
+        tasks.add(multipleChoiceQuestion);
+        tasks.add(numberRangeQuestion);
     }
 
     public void add(IScheduled task){

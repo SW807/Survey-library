@@ -30,9 +30,8 @@ public class NumberRangeQuestion extends Question {
     @Override
     public void updateTime() {
         Calendar now = Calendar.getInstance();
-        now.add(Calendar.SECOND, 5);
+        now.add(Calendar.SECOND, 30);
         time = now.getTimeInMillis();
-
     }
 
     @Override
