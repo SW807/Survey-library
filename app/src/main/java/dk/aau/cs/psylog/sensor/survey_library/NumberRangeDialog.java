@@ -54,7 +54,7 @@ public class NumberRangeDialog extends DialogFragment {
     }
 
     private void setButton(View view, final Activity context) {
-        Button button = (Button)view.findViewById(R.id.button);
+        Button button = (Button)view.findViewById(R.id.number_range_question_ok_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
