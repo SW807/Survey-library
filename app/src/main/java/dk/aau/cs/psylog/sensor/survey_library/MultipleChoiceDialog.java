@@ -1,12 +1,16 @@
 package dk.aau.cs.psylog.sensor.survey_library;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -31,6 +35,19 @@ public class MultipleChoiceDialog extends DialogFragment {
         builder.setTitle(text);
 
         boolean[] answers = new boolean[choices.length];
+        handleChoices(choices, singleSelection, builder, answers);
+
+        Button button = new Button(this.getActivity());
+        handleButton(button);
+
+        builder.setView(button);
+
+
+        // Create the AlertDialog object and return it
+        return builder.create();
+    }
+
+    private void handleChoices(CharSequence[] choices, Boolean singleSelection, AlertDialog.Builder builder, boolean[] answers) {
         int checked =0;
 
         if(singleSelection) {
@@ -50,9 +67,18 @@ public class MultipleChoiceDialog extends DialogFragment {
                 }
             });
         }
+    }
 
+    private void handleButton(Button button) {
+        button.setText("OK");
 
-        // Create the AlertDialog object and return it
-        return builder.create();
+        final Context context = this.getActivity();
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // DB
+                ((Activity)context).finish();
+            }
+        });
     }
 }

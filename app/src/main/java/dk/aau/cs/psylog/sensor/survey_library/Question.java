@@ -18,6 +18,7 @@ public abstract class Question implements IScheduled {
         Notification.Builder builder = new Notification.Builder(context)
                 .setContentTitle(Constants.DIALOG_TITLE)
                 .setContentText(text)
+                .setAutoCancel(true)
                 .setSmallIcon(icon);
         return builder;
     }
