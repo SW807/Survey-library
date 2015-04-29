@@ -24,26 +24,31 @@ public class NumberRangeQuestion extends Question {
 
     @Override
     public Long getTime() {
-        return null;
+        return time;
     }
 
     @Override
     public void updateTime() {
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.SECOND, 5);
+        time = now.getTimeInMillis();
 
     }
 
     @Override
     public Notification getNotification(Context context) {
-        return null;
+        Notification.Builder notificationBuilder = getNotifcationBuilder(context, android.R.drawable.ic_popup_reminder);
+        PendingIntent pendingIntent = getPendingIntent(context, NumberRangeDialog.class, this);
+        notificationBuilder.setContentIntent(pendingIntent);
+        return notificationBuilder.build();
     }
 
     @Override
     public void addQuestionData(Intent i) {
-        i.putExtra("min",min);
-        i.putExtra("max",max);
-        i.putExtra("minLabel",minLabel);
-        i.putExtra("maxLabel",maxLabel);
-        i.putExtra("text",text);
-
+        i.putExtra("min", min);
+        i.putExtra("max", max);
+        i.putExtra("minLabel", minLabel);
+        i.putExtra("maxLabel", maxLabel);
+        i.putExtra("text", text);
     }
 }

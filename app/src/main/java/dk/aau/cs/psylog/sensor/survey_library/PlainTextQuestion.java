@@ -16,7 +16,7 @@ public class PlainTextQuestion extends Question {
 
     @Override
     public void addQuestionData(Intent i) {
-
+        i.putExtra("text", text);
     }
 
     @Override
