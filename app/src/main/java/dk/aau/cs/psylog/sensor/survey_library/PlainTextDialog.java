@@ -1,12 +1,19 @@
 package dk.aau.cs.psylog.sensor.survey_library;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+
+import dk.aau.cs.psylog.survey_library.R;
 
 public class PlainTextDialog extends DialogFragment {
 
@@ -20,22 +27,31 @@ public class PlainTextDialog extends DialogFragment {
         Bundle intent = this.getActivity().getIntent().getExtras();
 
         String text = intent.getString("text");
-        CharSequence[] choices = intent.getStringArray("choices");
-        Boolean singleSelection = intent.getBoolean("singleSelection");
 
-
-        // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(text);
 
-        // Set up the input
-        final EditText input = new EditText(this.getActivity());
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
+        LayoutInflater layoutInflater = (LayoutInflater)this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.plain_text_question_layout, null);
 
+        final Context context = this.getActivity();
+        setButton(view, (Activity) context);
 
-        // Create the AlertDialog object and return it
+        builder.setView(view);
+
         return builder.create();
     }
+
+    private void setButton(View view, final Activity context) {
+        Button button = (Button)view.findViewById(R.id.plain_text_question_ok_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //answer
+                //Gem i DB!!!
+                ((Activity)context).finish();
+            }
+        });
+    }
+
 }
