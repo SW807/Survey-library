@@ -6,27 +6,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-public class Scheduler extends Service {
-    private ArrayList<IScheduled> tasks;
-    final Thread thread = new Thread(new RunTask(this));
-    private int ID = 0;
+import dk.aau.cs.psylog.module_lib.ISensor;
 
-    @Override
-    public void onCreate() {
-        tasks = new ArrayList();
-        initialize();
-        sortAfterTime();
-        super.onCreate();
+public class Scheduler implements ISensor {
+    String TAG = "SurveyScheduler";
+    private ArrayList<IScheduled> tasks;
+    Thread thread;
+    private int ID = 0;
+    Context context;
+
+    public Scheduler(Context context)
+    {
+        this.context=context;
+
     }
 
     private void initialize()
     {
+
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"});
         PlainTextQuestion plaintext = new PlainTextQuestion("Skriv en bog");
         NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Hvor glad er du?", 1, 10, "Ked af det", "Rigtig glad");
@@ -45,19 +49,30 @@ public class Scheduler extends Service {
         sortAfterTime();
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        thread.start();
-        return START_NOT_STICKY;
-    }
 
     private void sortAfterTime(){
         Collections.sort(this.tasks, new TaskComparator());
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public void startSensor() {
+        Log.d(TAG,"startSensor");
+        tasks = new ArrayList();
+        initialize();
+        sortAfterTime();
+
+        thread = new Thread(new RunTask(context));
+        thread.start();
+    }
+
+    @Override
+    public void stopSensor() {
+        thread.interrupt();
+    }
+
+    @Override
+    public void sensorParameters(Intent intent) {
+
     }
 
     private class RunTask implements Runnable {
@@ -74,7 +89,7 @@ public class Scheduler extends Service {
                 IScheduled task = tasks.get(0);
 
                 // Show question or other activity
-                NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                 mNotifyMgr.notify(1, task.getNotification(context));
 
 
