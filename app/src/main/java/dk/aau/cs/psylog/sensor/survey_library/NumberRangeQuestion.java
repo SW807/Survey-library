@@ -22,6 +22,22 @@ public class NumberRangeQuestion extends Question {
         this.maxLabel = maxLabel;
     }
 
+    public int getMin() {
+        return min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public String getMinLabel() {
+        return minLabel;
+    }
+
+    public String getMaxLabel() {
+        return maxLabel;
+    }
+
     @Override
     public Long getTime() {
         return time;
@@ -48,6 +64,6 @@ public class NumberRangeQuestion extends Question {
         i.putExtra("max", max);
         i.putExtra("minLabel", minLabel);
         i.putExtra("maxLabel", maxLabel);
-        i.putExtra("text", text);
+        i.putExtra("text", getText());
     }
 }

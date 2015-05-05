@@ -6,12 +6,22 @@ import android.content.Context;
 import android.content.Intent;
 
 public abstract class Question implements IScheduled {
-    protected String text;
+    private String text;
     private QuestionType questionType;
     public Question(String text, QuestionType questionType) {
         this.text = text;
         this.questionType = questionType;
         updateTime();
+    }
+
+    public QuestionType getQuestionType()
+    {
+        return questionType;
+    }
+
+    public String getText()
+    {
+        return text;
     }
 
     protected Notification.Builder getNotifcationBuilder(Context context, int icon) {

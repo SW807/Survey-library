@@ -9,4 +9,5 @@ public enum QuestionType{
     private QuestionType(int value){
         this.value = value;
     }
+    public int getValue() {return value;}
 }

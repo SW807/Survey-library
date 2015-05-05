@@ -19,6 +19,16 @@ public class MultipleChoiceQuestion extends Question{
         this.choices = choices;
     }
 
+    public boolean getSingleSelection()
+    {
+        return singleSelection;
+    }
+
+    public String[] getChoices()
+    {
+        return choices;
+    }
+
     @Override
     public Long getTime() {
         return time;
@@ -44,6 +54,6 @@ public class MultipleChoiceQuestion extends Question{
     {
         i.putExtra("choices",choices);
         i.putExtra("singleSelection",singleSelection);
-        i.putExtra("text",text);
+        i.putExtra("text",getText());
     }
 }
