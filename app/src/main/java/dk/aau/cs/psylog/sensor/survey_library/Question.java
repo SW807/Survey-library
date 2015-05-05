@@ -6,21 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 
 public abstract class Question implements IScheduled {
+    private int id;
     private String text;
     private QuestionType questionType;
+
     public Question(String text, QuestionType questionType) {
         this.text = text;
         this.questionType = questionType;
         updateTime();
     }
 
-    public QuestionType getQuestionType()
-    {
+    public QuestionType getQuestionType() {
         return questionType;
     }
 
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
@@ -42,6 +42,12 @@ public abstract class Question implements IScheduled {
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId(){return id;}
 
     public abstract void addQuestionData(Intent i);
 }

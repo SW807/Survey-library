@@ -13,6 +13,7 @@ public class MultipleChoiceQuestion extends Question{
     private boolean singleSelection;
     private Long time;
 
+
     public MultipleChoiceQuestion(String text, boolean singleSelection, String[] choices){
         super(text, QuestionType.MULTIPLE_CHOICE);
         this.singleSelection = singleSelection;
@@ -55,5 +56,6 @@ public class MultipleChoiceQuestion extends Question{
         i.putExtra("choices",choices);
         i.putExtra("singleSelection",singleSelection);
         i.putExtra("text",getText());
+        i.putExtra("id",getId());
     }
 }

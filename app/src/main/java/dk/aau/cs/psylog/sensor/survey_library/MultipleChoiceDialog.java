@@ -14,6 +14,8 @@ public class MultipleChoiceDialog extends DialogFragment {
 
     boolean[] multiSelctionAnswers;
     int singleSelctionChoice;
+    Boolean singleSelection
+    int id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,8 +28,8 @@ public class MultipleChoiceDialog extends DialogFragment {
 
         String text = intent.getString("text");
         CharSequence[] choices = intent.getStringArray("choices");
-        Boolean singleSelection = intent.getBoolean("singleSelection");
-
+        singleSelection = intent.getBoolean("singleSelection");
+        id = intent.getInt("id");
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -47,19 +49,17 @@ public class MultipleChoiceDialog extends DialogFragment {
     }
 
     private void handleChoices(final CharSequence[] choices, Boolean singleSelection, AlertDialog.Builder builder) {
-        int checked =0;
+        int checked = 0;
 
-        if(singleSelection) {
-            builder.setSingleChoiceItems(choices,checked,  new DialogInterface.OnClickListener() {
+        if (singleSelection) {
+            builder.setSingleChoiceItems(choices, checked, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     singleSelctionChoice = which;
                 }
             });
-        }
-        else
-        {
-            builder.setMultiChoiceItems(choices,null, new DialogInterface.OnMultiChoiceClickListener() {
+        } else {
+            builder.setMultiChoiceItems(choices, null, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                     multiSelctionAnswers[which] = isChecked;
@@ -75,10 +75,16 @@ public class MultipleChoiceDialog extends DialogFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
 
-                
+                if(singleSelection)
+                databaseHelper.addMultipleChoiceAnswer(id, singleSelctionChoice, true);
+                else
+                {
+                    //håndter multi selection
+                }
 
-                ((Activity)context).finish();
+                ((Activity) context).finish();
             }
         });
     }
