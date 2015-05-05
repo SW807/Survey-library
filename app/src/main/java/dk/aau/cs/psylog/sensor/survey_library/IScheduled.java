@@ -10,4 +10,6 @@ public interface IScheduled {
     public void updateTime();
 
     public Notification getNotification(Context context);
+
+    public int getId();
 }

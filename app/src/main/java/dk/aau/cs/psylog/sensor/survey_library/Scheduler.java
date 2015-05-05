@@ -96,7 +96,7 @@ public class Scheduler implements ISensor {
 
                 // Show question or other activity
                 NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-                mNotifyMgr.notify(1, task.getNotification(context));
+                mNotifyMgr.notify(task.getId(), task.getNotification(context));
 
 
                 //Update task
