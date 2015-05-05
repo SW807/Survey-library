@@ -17,14 +17,18 @@ public class DatabaseHelper {
     private static final String ANSWERS_TABLE = "answers";
     private static final String MULTIPLE_CHOICE_CHOICES_TABLE = "multiple_choice_choices";
     private static final String MULTIPLE_CHOICE_TABLE = "multiple_choice";
+    private static final String MULTIPLE_CHOICE_ANSWER_TABLE = "multiple_choice_answer";
     private static final String NUMBER_RANGE_TABLE = "number_range";
     private static final String PLAIN_TEXT_TABLE = "plain_text";
+
+
 
     private static final String QUESTION_ID_COLUMN = "question_id";
     private static final String QUESTION_TYPE_ID_COLUMN = "question_type_id";
     private static final String QUESTION_TEXT_COLUMN = "question_text";
 
     private static final String MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN = "single_selection";
+    private static final String MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN = "multiple_choice_choice";
     private static final String MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN = "choice_text";
 
     private static final String NUMBER_RANGE_MIN_COLUMN = "min";
@@ -33,6 +37,11 @@ public class DatabaseHelper {
     private static final String NUMBER_RANGE_MAX_LABEL_COLUMN = "max_label";
 
     private static final String ANSWERS_ANSWER_ID_COLUMN = "answer_id";
+    private static final String ANSWERS_ANSWERED_COLUMN = "answered";
+    private static final String ANSWERS_QUESTION_ID_COLUMN = "question_id";
+    private static final String ANSWERS_QUESTION_TYPE_ID_COLUMN = "question_type_id";
+
+    private static final String MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN = "answer_id";
 
 
 
@@ -83,13 +92,29 @@ public class DatabaseHelper {
         question_id += 1;
     }
 
-    public void addAnswer(){
+    public void addMultipleChoiceAnswer(int question_id, boolean answered, Integer choice) {
+        ContentValues answer = new ContentValues();
+
+        answer.put(ANSWERS_ANSWER_ID_COLUMN, answer_id);
+        answer.put(ANSWERS_QUESTION_ID_COLUMN, question_id);
+        answer.put(ANSWERS_QUESTION_TYPE_ID_COLUMN, QuestionType.MULTIPLE_CHOICE.getValue());
+        answer.put(ANSWERS_ANSWERED_COLUMN, answered);
+
+        contentResolver.insert(Uri.parse(MODULE_URI +ANSWERS_TABLE), answer);
+
+        ContentValues multipleChoiceAnswer = new ContentValues();
+        multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN, answer_id);
+        multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN,choice);
+
+        contentResolver.insert(Uri.parse(MODULE_URI +MULTIPLE_CHOICE_ANSWER_TABLE ),multipleChoiceAnswer);
+
+        answer_id+=1;
+    }
+
+    public void getQuestion() {
 
     }
 
-    public void getQuestion(){
-
+    public void addChoice() {
     }
-
-    public void addChoice(){}
 }
