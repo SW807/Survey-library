@@ -5,50 +5,130 @@
     {
       "name": "questions",
       "columns": [
-        { "name": "question_id", "dataType": "INTEGER"},
-		{ "name": "question_type_id", "dataType": "INTEGER"},
-		{ "name": "question_text", "dataType": "TEXT"}
-
+        {
+          "name":"question_id",
+          "dataType":"INTEGER"
+        },
+        {
+          "name": "question_type_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "question_text",
+          "dataType": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "multiple_choice_choices",
+      "columns": [
+        {
+          "name": "question_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "choice_text",
+          "dataType": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "multiple_choice",
+      "columns": [
+        {
+          "name": "question_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "single_selection",
+          "dataType": "BOOLEAN"
+        }
+      ]
+    },
+    {
+      "name": "number_range",
+      "columns": [
+        {
+          "name": "question_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "min",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "max",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "min_label",
+          "dataType": "TEXT"
+        },
+        {
+          "name": "max_label",
+          "dataType": "TEXT"
+        }
       ]
     },
     {
       "name": "answers",
       "columns": [
-        { "name": "question_id", "dataType": "INTEGER"},
-        { "name": "answer", "dataType": "INTEGER"}
+        {
+          "name": "answer_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name":"question_id",
+          "dataType":"INTEGER"
+        },
+        {
+          "name": "question_type_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "answered",
+          "dataType": "BOOLEAN"
+        }
       ]
     },
     {
-          "name": "multiple_choice_choices",
-          "columns": [
-            { "name": "choice_id", "dataType": "INTEGER"},
-            { "name": "choice_text", "dataType": "TEXT"}
-          ]
-    },
-    {
-        "name": "multiple_choice",
-            "columns": [
-                { "name": "question_id", "dataType": "INTEGER"},
-                { "name": "choice_id", "dataType": "INTEGER"},
-                { "name": "single_selection", "dataType": "BOOLEAN"}
-              ]
-    },
-    {
-              "name": "number_range",
-              "columns": [
-                { "name": "question_id", "dataType": "INTEGER"},
-                { "name": "min", "dataType": "INTEGER"},
-                { "name": "max", "dataType": "INTEGER"},
-                { "name": "min_label", "dataType": "TEXT"},
-                { "name": "max_label", "dataType": "TEXT"}
-        ]
-    },
-    {
-        "name": "plain_text",
-            "columns": [
-                { "name": "question_id", "dataType": "INTEGER"},
-                { "name": "text", "dataType": "TEXT"}
-            ]
+      "name": "plain_text_answer",
+      "columns": [
+        {
+          "name": "question_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "answer",
+          "dataType": "TEXT"
         }
+      ]
+    },
+    {
+      "name": "number_range_answer",
+      "columns": [
+        {
+          "name": "question_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "answer",
+          "dataType": "INTEGER"
+        }
+      ]
+    },
+    {
+      "name": "multiple_choice_answer",
+      "columns": [
+        {
+          "name": "answer_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "multiple_choice_choice",
+          "dataType": "INTEGER"
+        }
+      ]
+    }
   ]
 }
