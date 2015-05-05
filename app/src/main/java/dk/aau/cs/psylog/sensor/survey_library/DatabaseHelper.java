@@ -91,7 +91,7 @@ public class DatabaseHelper {
         return this_id;
     }
 
-    public void addMultipleChoiceAnswer(int question_id, boolean answered, Integer choice) {
+    public void addMultipleChoiceAnswer(int question_id, Integer choice, boolean answered) {
         ContentValues answer = new ContentValues();
 
         answer.put(ANSWERS_ANSWER_ID_COLUMN, answer_id);
@@ -99,15 +99,15 @@ public class DatabaseHelper {
         answer.put(ANSWERS_QUESTION_TYPE_ID_COLUMN, QuestionType.MULTIPLE_CHOICE.getValue());
         answer.put(ANSWERS_ANSWERED_COLUMN, answered);
 
-        contentResolver.insert(Uri.parse(MODULE_URI +ANSWERS_TABLE), answer);
+        contentResolver.insert(Uri.parse(MODULE_URI + ANSWERS_TABLE), answer);
 
         ContentValues multipleChoiceAnswer = new ContentValues();
         multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN, answer_id);
-        multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN,choice);
+        multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN, choice);
 
-        contentResolver.insert(Uri.parse(MODULE_URI +MULTIPLE_CHOICE_ANSWER_TABLE ),multipleChoiceAnswer);
+        contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_ANSWER_TABLE), multipleChoiceAnswer);
 
-        answer_id+=1;
+        answer_id += 1;
     }
 
     public void getQuestion() {
