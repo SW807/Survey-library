@@ -29,6 +29,7 @@ public class DatabaseHelper {
     private static final String MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN = "single_selection";
     private static final String MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN = "multiple_choice_choice";
     private static final String MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN = "choice_text";
+    private static final String MULTIPLE_CHOICE_CHOICES_CHOICE_ID_COLUMN = "choice_id";
 
     private static final String NUMBER_RANGE_MIN_COLUMN = "min";
     private static final String NUMBER_RANGE_MAX_COLUMN = "max";
@@ -67,9 +68,12 @@ public class DatabaseHelper {
             multipleChoiceValues.put(QUESTION_ID_COLUMN, this_id);
             multipleChoiceValues.put(MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN, ((MultipleChoiceQuestion) q).getSingleSelection());
 
+            int choice_id = 0;
             for (String choice : ((MultipleChoiceQuestion) q).getChoices()) {
                 ContentValues choicesValues = new ContentValues();
                 choicesValues.put(QUESTION_ID_COLUMN, this_id);
+                choicesValues.put(MULTIPLE_CHOICE_CHOICES_CHOICE_ID_COLUMN,choice_id);
+                choice_id+=1;
                 choicesValues.put(MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN, choice);
 
                 contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_CHOICES_TABLE), choicesValues);
@@ -106,6 +110,29 @@ public class DatabaseHelper {
         multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN, choice);
 
         contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_ANSWER_TABLE), multipleChoiceAnswer);
+
+        answer_id += 1;
+    }
+
+    public void addMultipleChoiceAnswer(int question_id, Boolean[] choices, boolean answered) {
+        ContentValues answer = new ContentValues();
+
+        answer.put(ANSWERS_ANSWER_ID_COLUMN, answer_id);
+        answer.put(ANSWERS_QUESTION_ID_COLUMN, question_id);
+        answer.put(ANSWERS_QUESTION_TYPE_ID_COLUMN, QuestionType.MULTIPLE_CHOICE.getValue());
+        answer.put(ANSWERS_ANSWERED_COLUMN, answered);
+
+        contentResolver.insert(Uri.parse(MODULE_URI + ANSWERS_TABLE), answer);
+
+        for (int i =0; i < choices.length ; i++) {
+            if (choices[i] == true) {
+                ContentValues multipleChoiceAnswer = new ContentValues();
+                multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN, answer_id);
+                multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN, i);
+
+                contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_ANSWER_TABLE), multipleChoiceAnswer);
+            }
+        }
 
         answer_id += 1;
     }

@@ -27,6 +27,10 @@
           "dataType": "INTEGER"
         },
         {
+          "name":"choice_id",
+          "dataType":"INTEGER"
+        },
+        {
           "name": "choice_text",
           "dataType": "TEXT"
         }
