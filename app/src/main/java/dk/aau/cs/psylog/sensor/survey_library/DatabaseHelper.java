@@ -22,7 +22,6 @@ public class DatabaseHelper {
     private static final String PLAIN_TEXT_TABLE = "plain_text";
 
 
-
     private static final String QUESTION_ID_COLUMN = "question_id";
     private static final String QUESTION_TYPE_ID_COLUMN = "question_type_id";
     private static final String QUESTION_TEXT_COLUMN = "question_text";
@@ -44,20 +43,20 @@ public class DatabaseHelper {
     private static final String MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN = "answer_id";
 
 
-
     private static int question_id = 0;
-    private static int answer_id =0;
+    private static int answer_id = 0;
 
     public DatabaseHelper(Context context) {
         this.context = context;
         this.contentResolver = context.getContentResolver();
     }
 
-    public void addQuestion(Question q) {
+    public int addQuestion(Question q) {
+        int this_id = question_id;
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(QUESTION_ID_COLUMN, question_id);
-        contentValues.put(QUESTION_TYPE_ID_COLUMN,q.getQuestionType().ordinal());
+        contentValues.put(QUESTION_ID_COLUMN, this_id);
+        contentValues.put(QUESTION_TYPE_ID_COLUMN, q.getQuestionType().ordinal());
         contentValues.put(QUESTION_TEXT_COLUMN, q.getText());
 
         contentResolver.insert(Uri.parse(MODULE_URI + QUESTIONS_TABLE), contentValues);
@@ -65,23 +64,22 @@ public class DatabaseHelper {
         if (q.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
             ContentValues multipleChoiceValues = new ContentValues();
 
-            multipleChoiceValues.put(QUESTION_ID_COLUMN, question_id);
+            multipleChoiceValues.put(QUESTION_ID_COLUMN, this_id);
             multipleChoiceValues.put(MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN, ((MultipleChoiceQuestion) q).getSingleSelection());
 
-            for ( String choice : ((MultipleChoiceQuestion)q).getChoices())
-            {
+            for (String choice : ((MultipleChoiceQuestion) q).getChoices()) {
                 ContentValues choicesValues = new ContentValues();
-                choicesValues.put(QUESTION_ID_COLUMN,question_id);
-                choicesValues.put(MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN,choice);
+                choicesValues.put(QUESTION_ID_COLUMN, this_id);
+                choicesValues.put(MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN, choice);
 
-                contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_CHOICES_TABLE),choicesValues);
+                contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_CHOICES_TABLE), choicesValues);
             }
 
             contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_TABLE), multipleChoiceValues);
         } else if (q.getQuestionType() == QuestionType.NUMBER_RANGE) {
             ContentValues numberRangeValues = new ContentValues();
 
-            numberRangeValues.put(QUESTION_ID_COLUMN, question_id);
+            numberRangeValues.put(QUESTION_ID_COLUMN, this_id);
             numberRangeValues.put(NUMBER_RANGE_MIN_COLUMN, ((NumberRangeQuestion) q).getMin());
             numberRangeValues.put(NUMBER_RANGE_MAX_COLUMN, ((NumberRangeQuestion) q).getMax());
             numberRangeValues.put(NUMBER_RANGE_MIN_LABEL_COLUMN, ((NumberRangeQuestion) q).getMinLabel());
@@ -90,6 +88,7 @@ public class DatabaseHelper {
             contentResolver.insert(Uri.parse(MODULE_URI + NUMBER_RANGE_TABLE), numberRangeValues);
         }
         question_id += 1;
+        return this_id;
     }
 
     public void addMultipleChoiceAnswer(int question_id, boolean answered, Integer choice) {
