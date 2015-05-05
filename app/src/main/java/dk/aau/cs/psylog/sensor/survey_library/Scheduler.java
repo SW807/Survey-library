@@ -36,9 +36,9 @@ public class Scheduler implements ISensor {
         NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Hvor glad er du?", 1, 10, "Ked af det", "Rigtig glad");
 
         DatabaseHelper hest = new DatabaseHelper(context);
-        hest.addQuestion(multipleChoiceQuestion);
-        hest.addQuestion(plaintext);
-        hest.addQuestion(numberRangeQuestion);
+        multipleChoiceQuestion.setId(hest.addQuestion(multipleChoiceQuestion));
+        plaintext.setId( hest.addQuestion(plaintext));
+        numberRangeQuestion.setId(hest.addQuestion(numberRangeQuestion));
 
         tasks.add(plaintext);
         tasks.add(multipleChoiceQuestion);

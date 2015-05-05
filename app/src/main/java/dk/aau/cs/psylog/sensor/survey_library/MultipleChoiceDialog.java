@@ -14,7 +14,7 @@ public class MultipleChoiceDialog extends DialogFragment {
 
     boolean[] multiSelctionAnswers;
     int singleSelctionChoice;
-    Boolean singleSelection
+    Boolean singleSelection;
     int id;
 
     @Override
