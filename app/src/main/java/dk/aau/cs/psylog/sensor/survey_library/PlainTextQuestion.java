@@ -28,7 +28,7 @@ public class PlainTextQuestion extends Question {
     @Override
     public void updateTime() {
         Calendar now = Calendar.getInstance();
-        now.add(Calendar.SECOND, 1000);
+        now.add(Calendar.SECOND, 5);
         time = now.getTimeInMillis();
     }
 
