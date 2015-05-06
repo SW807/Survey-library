@@ -22,47 +22,49 @@ public class Scheduler implements ISensor {
     private int ID = 0;
     Context context;
 
-    public Scheduler(Context context)
-    {
-        this.context=context;
+    public Scheduler(Context context) {
+        this.context = context;
 
     }
 
-    private void initialize()
-    {
+    private void initialize() {
 
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"});
+        MultipleChoiceQuestion multipleChoiceQuestion2 = new MultipleChoiceQuestion("MULTI - Her er det du skal svare på.", false, new String[]{"Option 1", "Option 2", "Option 3", "Option 4"});
         PlainTextQuestion plaintext = new PlainTextQuestion("Skriv en bog");
         NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Hvor glad er du?", 1, 10, "Ked af det", "Rigtig glad");
 
         DatabaseHelper hest = new DatabaseHelper(context);
         multipleChoiceQuestion.setId(hest.addQuestion(multipleChoiceQuestion));
-        plaintext.setId( hest.addQuestion(plaintext));
+        multipleChoiceQuestion2.setId(hest.addQuestion(multipleChoiceQuestion2));
+        Log.d("hest", "jeg er her");
+        plaintext.setId(hest.addQuestion(plaintext));
         numberRangeQuestion.setId(hest.addQuestion(numberRangeQuestion));
 
-        tasks.add(plaintext);
-        tasks.add(multipleChoiceQuestion);
-        tasks.add(numberRangeQuestion);
+        // tasks.add(plaintext);
+        //tasks.add(multipleChoiceQuestion);
+        tasks.add(multipleChoiceQuestion2);
+        // tasks.add(numberRangeQuestion);
     }
 
-    public void add(IScheduled task){
+    public void add(IScheduled task) {
         tasks.add(task);
         sortAfterTime();
     }
 
-    public void remove(IScheduled task){
+    public void remove(IScheduled task) {
         tasks.remove(task);
         sortAfterTime();
     }
 
 
-    private void sortAfterTime(){
+    private void sortAfterTime() {
         Collections.sort(this.tasks, new TaskComparator());
     }
 
     @Override
     public void startSensor() {
-        Log.d(TAG,"startSensor");
+        Log.d(TAG, "startSensor");
         tasks = new ArrayList();
         initialize();
         sortAfterTime();
@@ -84,6 +86,7 @@ public class Scheduler implements ISensor {
     private class RunTask implements Runnable {
 
         Context context;
+
         private RunTask(Context context) {
             this.context = context;
         }
@@ -105,7 +108,7 @@ public class Scheduler implements ISensor {
             }
         }
 
-        private void sleep(){
+        private void sleep() {
             Long diff = tasks.get(0).getTime() - new Date().getTime();
             if (diff > 0)
                 SystemClock.sleep(diff);

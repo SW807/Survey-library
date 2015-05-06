@@ -81,7 +81,7 @@ public class MultipleChoiceDialog extends DialogFragment {
                 databaseHelper.addMultipleChoiceAnswer(id, singleSelctionChoice, true);
                 else
                 {
-                    //håndter multi selection
+                   databaseHelper.addMultipleChoiceAnswer(id,multiSelctionAnswers,true);
                 }
 
                 ((Activity) context).finish();
