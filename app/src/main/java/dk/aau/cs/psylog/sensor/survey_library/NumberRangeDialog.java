@@ -17,6 +17,7 @@ import dk.aau.cs.psylog.survey_library.R;
 
 public class NumberRangeDialog extends DialogFragment {
     private int answer = 0;
+    private int id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,12 +33,13 @@ public class NumberRangeDialog extends DialogFragment {
         int max = intent.getInt("max");
         String minLabel = intent.getString("minLabel");
         String maxLabel = intent.getString("maxLabel");
+        id = intent.getInt("id");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(text);
 
-        LayoutInflater layoutInflater = (LayoutInflater)this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.number_range_question_layout, null);
 
         setTextViews(minLabel, maxLabel, view);
@@ -54,24 +56,25 @@ public class NumberRangeDialog extends DialogFragment {
     }
 
     private void setButton(View view, final Activity context) {
-        Button button = (Button)view.findViewById(R.id.number_range_question_ok_button);
+        Button button = (Button) view.findViewById(R.id.number_range_question_ok_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //answer
-                //Gem i DB!!!
-                ((Activity)context).finish();
+                DatabaseHelper databaseHelper = new DatabaseHelper(context);
+                databaseHelper.addNumberRangeQuestion(id, answer, true);
+                ((Activity) context).finish();
             }
         });
     }
 
     private void setSeekBar(final int min, int max, View view) {
-        SeekBar seekBar = (SeekBar)view.findViewById(R.id.seekBar);
-        seekBar.setMax(max);
+        SeekBar seekBar = (SeekBar) view.findViewById(R.id.seekBar);
+        seekBar.setMax(max - min);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                answer = progress+min;
+                answer = progress + min;
             }
 
             @Override
