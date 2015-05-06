@@ -53,15 +53,12 @@ public class DatabaseHelper {
 
     public int getNextQuestionId() {
         Cursor c = contentResolver.query(Uri.parse(MODULE_URI + QUESTIONS_TABLE), new String[]{"MAX ( " + QUESTION_ID_COLUMN + " )"}, null, null, null);
-
-
         // if no questions return 0, else increment the largest index of existing questions
-        return  c.moveToFirst() ? c.getInt(0) + 1 : 0;
+        return c.moveToFirst() ? c.getInt(0) + 1 : 0;
     }
 
     public int getNextAnswerId() {
         Cursor c = contentResolver.query(Uri.parse(MODULE_URI + ANSWERS_TABLE), new String[]{"MAX ( " + ANSWERS_ANSWER_ID_COLUMN + ")"}, null, null, null);
-
         // if no answers return 0, else increment the largest index of existing questions
         return c.moveToFirst() ? c.getInt(0) + 1 : 0;
     }

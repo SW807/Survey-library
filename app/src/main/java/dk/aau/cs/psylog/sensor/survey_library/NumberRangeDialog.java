@@ -87,9 +87,9 @@ public class NumberRangeDialog extends DialogFragment {
     }
 
     private void setTextViews(String minLabel, String maxLabel, View view) {
-        TextView minLabelView = (TextView)view.findViewById(R.id.minLabel);
+        TextView minLabelView = (TextView) view.findViewById(R.id.minLabel);
         minLabelView.setText(minLabel);
-        TextView maxLabelView = (TextView)view.findViewById(R.id.maxLabel);
+        TextView maxLabelView = (TextView) view.findViewById(R.id.maxLabel);
         maxLabelView.setText(maxLabel);
     }
 }

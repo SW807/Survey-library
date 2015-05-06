@@ -77,11 +77,10 @@ public class MultipleChoiceDialog extends DialogFragment {
             public void onClick(View v) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
 
-                if(singleSelection)
-                databaseHelper.addMultipleChoiceAnswer(id, singleSelctionChoice, true);
-                else
-                {
-                   databaseHelper.addMultipleChoiceAnswer(id,multiSelctionAnswers,true);
+                if (singleSelection)
+                    databaseHelper.addMultipleChoiceAnswer(id, singleSelctionChoice, true);
+                else {
+                    databaseHelper.addMultipleChoiceAnswer(id, multiSelctionAnswers, true);
                 }
 
                 ((Activity) context).finish();

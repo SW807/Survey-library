@@ -47,7 +47,9 @@ public abstract class Question implements IScheduled {
         this.id = id;
     }
 
-    public int getId(){return id;}
+    public int getId() {
+        return id;
+    }
 
     public abstract void addQuestionData(Intent i);
 }

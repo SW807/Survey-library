@@ -8,25 +8,23 @@ import android.util.Log;
 
 import java.util.Calendar;
 
-public class MultipleChoiceQuestion extends Question{
+public class MultipleChoiceQuestion extends Question {
     private String[] choices;
     private boolean singleSelection;
     private Long time;
 
 
-    public MultipleChoiceQuestion(String text, boolean singleSelection, String[] choices){
+    public MultipleChoiceQuestion(String text, boolean singleSelection, String[] choices) {
         super(text, QuestionType.MULTIPLE_CHOICE);
         this.singleSelection = singleSelection;
         this.choices = choices;
     }
 
-    public boolean getSingleSelection()
-    {
+    public boolean getSingleSelection() {
         return singleSelection;
     }
 
-    public String[] getChoices()
-    {
+    public String[] getChoices() {
         return choices;
     }
 
@@ -51,11 +49,10 @@ public class MultipleChoiceQuestion extends Question{
     }
 
     @Override
-    public void addQuestionData(Intent i)
-    {
-        i.putExtra("choices",choices);
-        i.putExtra("singleSelection",singleSelection);
-        i.putExtra("text",getText());
-        i.putExtra("id",getId());
+    public void addQuestionData(Intent i) {
+        i.putExtra("choices", choices);
+        i.putExtra("singleSelection", singleSelection);
+        i.putExtra("text", getText());
+        i.putExtra("id", getId());
     }
 }

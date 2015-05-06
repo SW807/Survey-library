@@ -16,7 +16,7 @@ import dk.aau.cs.psylog.survey_library.R;
 
 public class TransparentActivity extends Activity {
 
-    static  String TAG = "TransparentActivity";
+    static String TAG = "TransparentActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +29,9 @@ public class TransparentActivity extends Activity {
             Class<?> DialogType = Class.forName(classname);
 
 
-            DialogFragment dialog  = (DialogFragment)DialogType.newInstance();
-            dialog.show(getFragmentManager(),TAG);
-        }
-        catch(ClassNotFoundException e)
-        {
+            DialogFragment dialog = (DialogFragment) DialogType.newInstance();
+            dialog.show(getFragmentManager(), TAG);
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
 
         } catch (InstantiationException e) {
@@ -42,8 +40,6 @@ public class TransparentActivity extends Activity {
             e.printStackTrace();
         }
     }
-
-
 
 
     @Override

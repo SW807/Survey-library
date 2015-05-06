@@ -7,7 +7,7 @@ import dk.aau.cs.psylog.module_lib.SensorService;
 public class PsyLogService extends SensorService {
     @Override
     public void setSensor() {
-        Log.d("SurveryScheduler","service-setSensor");
+        Log.d("SurveryScheduler", "service-setSensor");
         sensor = new Scheduler(this);
     }
 }
