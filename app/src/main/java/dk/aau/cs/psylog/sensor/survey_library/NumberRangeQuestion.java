@@ -65,5 +65,6 @@ public class NumberRangeQuestion extends Question {
         i.putExtra("minLabel", minLabel);
         i.putExtra("maxLabel", maxLabel);
         i.putExtra("text", getText());
+        i.putExtra("id", getId());
     }
 }
