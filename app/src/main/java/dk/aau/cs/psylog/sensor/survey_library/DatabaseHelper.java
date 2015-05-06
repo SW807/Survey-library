@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import dk.aau.cs.psylog.module_lib.DBAccessContract;
 
@@ -126,7 +127,7 @@ public class DatabaseHelper {
 
     }
 
-    public void addMultipleChoiceAnswer(int question_id, Boolean[] choices, boolean answered) {
+    public void addMultipleChoiceAnswer(int question_id, boolean[] choices, boolean answered) {
         int answer_id =getNextAnswerId();
 
         ContentValues answer = new ContentValues();
