@@ -99,7 +99,7 @@
       "name": "plain_text_answer",
       "columns": [
         {
-          "name": "question_id",
+          "name": "answer_id",
           "dataType": "INTEGER"
         },
         {
@@ -112,7 +112,7 @@
       "name": "number_range_answer",
       "columns": [
         {
-          "name": "question_id",
+          "name": "answer_id",
           "dataType": "INTEGER"
         },
         {
