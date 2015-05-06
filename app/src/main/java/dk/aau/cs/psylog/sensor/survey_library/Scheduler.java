@@ -19,7 +19,6 @@ public class Scheduler implements ISensor {
     String TAG = "SurveyScheduler";
     private ArrayList<IScheduled> tasks;
     Thread thread;
-    private int ID = 0;
     Context context;
 
     public Scheduler(Context context) {
