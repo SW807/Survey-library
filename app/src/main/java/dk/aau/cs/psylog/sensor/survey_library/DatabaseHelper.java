@@ -20,7 +20,9 @@ public class DatabaseHelper {
     private static final String MULTIPLE_CHOICE_TABLE = "multiple_choice";
     private static final String MULTIPLE_CHOICE_ANSWER_TABLE = "multiple_choice_answer";
     private static final String NUMBER_RANGE_TABLE = "number_range";
+    private static final String NUMBER_RANGE_ANSWER_TABLE = "number_range_answer";
     private static final String PLAIN_TEXT_TABLE = "plain_text";
+    private static final String PLAIN_TEXT_ANSWER_TABLE = "plain_text_answer";
 
 
     private static final String QUESTION_ID_COLUMN = "question_id";
@@ -44,7 +46,11 @@ public class DatabaseHelper {
 
     private static final String MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN = "answer_id";
 
+    private static final String NUMBER_RANGE_ANSWER_ANSWER_ID_COLUMN = "answer_id";
+    private static final String NUMBER_RANGE_ANSWER_ANSWER_COLUMN = "answer";
 
+    private static final String PLAIN_TEXT_ANSWER_ANSWER_ID_COLUMN = "answer_id";
+    private static final String PLAIN_TEXT_ANSWER_ANSWER_COLUMN = "answer";
 
     public DatabaseHelper(Context context) {
         this.context = context;
@@ -106,46 +112,63 @@ public class DatabaseHelper {
     }
 
     public void addMultipleChoiceAnswer(int question_id, Integer choice, boolean answered) {
-        int answer_id = getNextAnswerId();
-        ContentValues answer = new ContentValues();
+        int answer_id = insertAnswer(question_id, answered, QuestionType.MULTIPLE_CHOICE);
 
-        answer.put(ANSWERS_ANSWER_ID_COLUMN, answer_id);
-        answer.put(ANSWERS_QUESTION_ID_COLUMN, question_id);
-        answer.put(ANSWERS_QUESTION_TYPE_ID_COLUMN, QuestionType.MULTIPLE_CHOICE.getValue());
-        answer.put(ANSWERS_ANSWERED_COLUMN, answered);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN, answer_id);
+        contentValues.put(MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN, choice);
 
-        contentResolver.insert(Uri.parse(MODULE_URI + ANSWERS_TABLE), answer);
-
-        ContentValues multipleChoiceAnswer = new ContentValues();
-        multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN, answer_id);
-        multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN, choice);
-
-        contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_ANSWER_TABLE), multipleChoiceAnswer);
+        contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_ANSWER_TABLE), contentValues);
 
     }
 
     public void addMultipleChoiceAnswer(int question_id, boolean[] choices, boolean answered) {
-        int answer_id =getNextAnswerId();
-
-        ContentValues answer = new ContentValues();
-
-        answer.put(ANSWERS_ANSWER_ID_COLUMN, answer_id);
-        answer.put(ANSWERS_QUESTION_ID_COLUMN, question_id);
-        answer.put(ANSWERS_QUESTION_TYPE_ID_COLUMN, QuestionType.MULTIPLE_CHOICE.getValue());
-        answer.put(ANSWERS_ANSWERED_COLUMN, answered);
-
-        contentResolver.insert(Uri.parse(MODULE_URI + ANSWERS_TABLE), answer);
+        int answer_id = insertAnswer(question_id, answered, QuestionType.MULTIPLE_CHOICE);
 
         for (int i = 0; i < choices.length; i++) {
             if (choices[i] == true) {
-                ContentValues multipleChoiceAnswer = new ContentValues();
-                multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN, answer_id);
-                multipleChoiceAnswer.put(MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN, i);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(MULTIPLE_CHOICE_ANSWER_ANSWER_ID_COLUMN, answer_id);
+                contentValues.put(MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN, i);
 
-                contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_ANSWER_TABLE), multipleChoiceAnswer);
+                contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_ANSWER_TABLE), contentValues);
             }
         }
     }
+
+    public void addNumberRangeQuestion(int question_id, int answer, boolean answered) {
+        int answer_id = insertAnswer(question_id, answered, QuestionType.NUMBER_RANGE);
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NUMBER_RANGE_ANSWER_ANSWER_ID_COLUMN, answer_id);
+        contentValues.put(NUMBER_RANGE_ANSWER_ANSWER_COLUMN, answer);
+
+        contentResolver.insert(Uri.parse(MODULE_URI + NUMBER_RANGE_ANSWER_TABLE), contentValues);
+    }
+
+    public void addPlainTextQuestion(int question_id, String answer, boolean answered) {
+        int answer_id = insertAnswer(question_id, answered, QuestionType.PLAIN_TEXT);
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PLAIN_TEXT_ANSWER_ANSWER_ID_COLUMN, answer_id);
+        contentValues.put(PLAIN_TEXT_ANSWER_ANSWER_COLUMN, answer);
+
+        contentResolver.insert(Uri.parse(MODULE_URI + PLAIN_TEXT_ANSWER_TABLE), contentValues);
+    }
+
+    private int insertAnswer(int question_id, boolean answered, QuestionType questionType) {
+        int answer_id = getNextAnswerId();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ANSWERS_ANSWER_ID_COLUMN, answer_id);
+        contentValues.put(ANSWERS_QUESTION_ID_COLUMN, question_id);
+        contentValues.put(ANSWERS_QUESTION_TYPE_ID_COLUMN, questionType.getValue());
+        contentValues.put(ANSWERS_ANSWERED_COLUMN, answered);
+
+        contentResolver.insert(Uri.parse(MODULE_URI + ANSWERS_TABLE), contentValues);
+        return answer_id;
+    }
+
 
     public void getQuestion() {
 
