@@ -199,10 +199,64 @@ public class DatabaseHelper {
     }
 
 
-    public void getQuestion() {
+    public ArrayList<Question> getQuestions() {
+        ArrayList<Question> questions = new ArrayList<>();
 
+        Cursor cursor = contentResolver.query(Uri.parse(MODULE_URI + QUESTIONS_TABLE), null, null, null, null);
+
+        while (cursor != null && cursor.moveToNext()) {
+            int questionId = cursor.getInt(cursor.getColumnIndex(QUESTION_ID_COLUMN));
+            String questionText = cursor.getString(cursor.getColumnIndex(QUESTION_TEXT_COLUMN));
+            QuestionType questionType = QuestionType.values()[cursor.getInt(cursor.getColumnIndex(QUESTION_TYPE_ID_COLUMN))];
+            switch (questionType) {
+                case PLAIN_TEXT:
+                    questions.add(new PlainTextQuestion(questionText, questionId));
+                    break;
+                case NUMBER_RANGE:
+                    questions.add(initializeNumberRangeQuestion(questionText, questionId));
+                    break;
+                case MULTIPLE_CHOICE:
+                    questions.add(initializeMultipleChoiceQuestion(questionText, questionId));
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown question type: " + questionType.toString());
+            }
+        }
+
+
+        return questions;
     }
 
-    public void addChoice() {
+    private NumberRangeQuestion initializeNumberRangeQuestion(String questionText, int questionId) {
+        Cursor cursor = contentResolver.query(Uri.parse(MODULE_URI + NUMBER_RANGE_TABLE), null, NUMBER_RANGE_QUESTION_ID_COLUMN + "= ?", new String[]{"" + questionId}, null);
+        if (cursor.moveToFirst()) {
+            return new NumberRangeQuestion(questionText,
+                    cursor.getInt(cursor.getColumnIndex(NUMBER_RANGE_MIN_COLUMN)),
+                    cursor.getInt(cursor.getColumnIndex(NUMBER_RANGE_MAX_COLUMN)),
+                    cursor.getString(cursor.getColumnIndex(NUMBER_RANGE_MIN_LABEL_COLUMN)),
+                    cursor.getString(cursor.getColumnIndex(NUMBER_RANGE_MAX_LABEL_COLUMN)),
+                    questionId);
+        }
+        throw new CursorIndexOutOfBoundsException("Cursor has no rows for questionId: " + questionId);
+    }
+
+    private MultipleChoiceQuestion initializeMultipleChoiceQuestion(String questionText, int questionId) {
+        Cursor cursor = contentResolver.query(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_TABLE), null, MULTIPLE_CHOICE_QUESTION_ID_COLUMN + "= ?", new String[]{"" + questionId}, null);
+        if (cursor.moveToFirst()) {
+            return new MultipleChoiceQuestion(questionText, (1 == cursor.getInt(cursor.getColumnIndex(MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN))), getMultipleChoiceChoices(questionId), questionId);
+        }
+        throw new CursorIndexOutOfBoundsException("Cursor has no rows for questionId: " + questionId);
+    }
+
+    private String[] getMultipleChoiceChoices(int questionId) {
+        Cursor cursor = contentResolver.query(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_CHOICES_TABLE), null, MULTIPLE_CHOICE_CHOICES_QUESTION_ID_COLUMN + "= ?", new String[]{"" + questionId}, MULTIPLE_CHOICE_CHOICES_CHOICE_ID_COLUMN);
+        if (cursor.moveToFirst()) {
+            ArrayList<String> choices = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                choices.add(cursor.getString(cursor.getColumnIndex(MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN)));
+            }
+            return choices.toArray(new String[choices.size()]);
+        }
+        throw new CursorIndexOutOfBoundsException("Cursor has no rows for questionId: " + questionId);
     }
 }
