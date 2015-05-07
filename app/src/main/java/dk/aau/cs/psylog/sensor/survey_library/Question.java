@@ -37,11 +37,8 @@ public abstract class Question implements IScheduled {
     protected PendingIntent getPendingIntent(Context context, Class<?> _class, Question q) {
         Intent resultIntent = new Intent(context, TransparentActivity.class);
         resultIntent.putExtra("class", _class.getName());
-
         q.addQuestionData(resultIntent);
-
-        resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        return PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(context, id, resultIntent, PendingIntent.FLAG_ONE_SHOT); //requestCode is set to id so the pendingIntents are different when matching
     }
 
     public void setId(int id) {
