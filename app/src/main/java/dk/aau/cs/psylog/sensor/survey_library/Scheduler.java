@@ -24,26 +24,30 @@ public class Scheduler implements ISensor {
     public Scheduler(Context context) {
         this.context = context;
 
+        Log.d(TAG, "startSensor");
+        tasks = new ArrayList();
+        initialize();
+        sortAfterTime();
+
+        thread = new Thread(new RunTask(context));
+        thread.start();
+
     }
 
     private void initialize() {
 
-        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"});
-        MultipleChoiceQuestion multipleChoiceQuestion2 = new MultipleChoiceQuestion("MULTI - Her er det du skal svare på.", false, new String[]{"Option 1", "Option 2", "Option 3", "Option 4"});
-        PlainTextQuestion plaintext = new PlainTextQuestion("Skriv en bog");
-        NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Hvor glad er du?", 1, 10, "Ked af det", "Rigtig glad");
+        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"},0);
+        MultipleChoiceQuestion multipleChoiceQuestion2 = new MultipleChoiceQuestion("MULTI - Her er det du skal svare på.", false, new String[]{"Option 1", "Option 2", "Option 3", "Option 4"},1);
+        PlainTextQuestion plaintext = new PlainTextQuestion("Skriv en bog",2);
+        NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Hvor glad er du?", 1, 10, "Ked af det", "Rigtig glad",3);
 
-        DatabaseHelper hest = new DatabaseHelper(context);
-        multipleChoiceQuestion.setId(hest.addQuestion(multipleChoiceQuestion));
-        multipleChoiceQuestion2.setId(hest.addQuestion(multipleChoiceQuestion2));
-        Log.d("hest", "jeg er her");
-        plaintext.setId(hest.addQuestion(plaintext));
-        numberRangeQuestion.setId(hest.addQuestion(numberRangeQuestion));
+        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+        multipleChoiceQuestion.setId(databaseHelper.addQuestion(multipleChoiceQuestion));
+        multipleChoiceQuestion2.setId(databaseHelper.addQuestion(multipleChoiceQuestion2));
+        plaintext.setId(databaseHelper.addQuestion(plaintext));
+        numberRangeQuestion.setId(databaseHelper.addQuestion(numberRangeQuestion));
 
-        // tasks.add(plaintext);
-        //tasks.add(multipleChoiceQuestion);
-        tasks.add(multipleChoiceQuestion2);
-        // tasks.add(numberRangeQuestion);
+        tasks.addAll(databaseHelper.getQuestions());
     }
 
     public void add(IScheduled task) {

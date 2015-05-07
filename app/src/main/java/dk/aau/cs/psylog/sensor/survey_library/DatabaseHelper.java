@@ -64,7 +64,7 @@ public class DatabaseHelper {
         this.contentResolver = context.getContentResolver();
     }
 
-    public int getNextQuestionId() {
+    private int getNextQuestionId() {
         Cursor c = contentResolver.query(Uri.parse(MODULE_URI + QUESTIONS_TABLE), new String[]{"MAX ( " + QUESTION_ID_COLUMN + " )"}, null, null, null);
         // if no questions return 0, else increment the largest index of existing questions
         return c.moveToFirst() ? c.getInt(0) + 1 : 0;

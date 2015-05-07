@@ -10,9 +10,10 @@ public abstract class Question implements IScheduled {
     private String text;
     private QuestionType questionType;
 
-    public Question(String text, QuestionType questionType) {
+    public Question(String text, QuestionType questionType, int id) {
         this.text = text;
         this.questionType = questionType;
+        this.id = id;
         updateTime();
     }
 

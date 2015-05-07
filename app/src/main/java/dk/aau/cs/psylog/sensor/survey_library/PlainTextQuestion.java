@@ -10,8 +10,8 @@ import java.util.Calendar;
 public class PlainTextQuestion extends Question {
     private Long time;
 
-    public PlainTextQuestion(String text) {
-        super(text, QuestionType.PLAIN_TEXT);
+    public PlainTextQuestion(String text, int id) {
+        super(text, QuestionType.PLAIN_TEXT, id);
     }
 
     @Override
