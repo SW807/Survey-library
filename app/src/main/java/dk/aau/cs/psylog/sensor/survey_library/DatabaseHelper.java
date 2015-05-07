@@ -4,8 +4,10 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.net.Uri;
-import android.util.Log;
+
+import java.util.ArrayList;
 
 import dk.aau.cs.psylog.module_lib.DBAccessContract;
 
@@ -79,36 +81,58 @@ public class DatabaseHelper {
 
         contentResolver.insert(Uri.parse(MODULE_URI + QUESTIONS_TABLE), contentValues);
 
-        if (q.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
-            ContentValues multipleChoiceValues = new ContentValues();
+        switch (q.getQuestionType()) {
 
-            multipleChoiceValues.put(QUESTION_ID_COLUMN, this_id);
-            multipleChoiceValues.put(MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN, ((MultipleChoiceQuestion) q).getSingleSelection());
-
-            int choice_id = 0;
-            for (String choice : ((MultipleChoiceQuestion) q).getChoices()) {
-                ContentValues choicesValues = new ContentValues();
-                choicesValues.put(QUESTION_ID_COLUMN, this_id);
-                choicesValues.put(MULTIPLE_CHOICE_CHOICES_CHOICE_ID_COLUMN, choice_id);
-                choice_id += 1;
-                choicesValues.put(MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN, choice);
-
-                contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_CHOICES_TABLE), choicesValues);
-            }
-
-            contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_TABLE), multipleChoiceValues);
-        } else if (q.getQuestionType() == QuestionType.NUMBER_RANGE) {
-            ContentValues numberRangeValues = new ContentValues();
-
-            numberRangeValues.put(QUESTION_ID_COLUMN, this_id);
-            numberRangeValues.put(NUMBER_RANGE_MIN_COLUMN, ((NumberRangeQuestion) q).getMin());
-            numberRangeValues.put(NUMBER_RANGE_MAX_COLUMN, ((NumberRangeQuestion) q).getMax());
-            numberRangeValues.put(NUMBER_RANGE_MIN_LABEL_COLUMN, ((NumberRangeQuestion) q).getMinLabel());
-            numberRangeValues.put(NUMBER_RANGE_MAX_LABEL_COLUMN, ((NumberRangeQuestion) q).getMaxLabel());
-
-            contentResolver.insert(Uri.parse(MODULE_URI + NUMBER_RANGE_TABLE), numberRangeValues);
+            case PLAIN_TEXT:
+                // Added already because it only has text
+                break;
+            case NUMBER_RANGE:
+                addNumberRangeQuestion((NumberRangeQuestion) q, this_id);
+                break;
+            case MULTIPLE_CHOICE:
+                addMultipleChoiceQuestion((MultipleChoiceQuestion) q, this_id);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown question type: " + q.getQuestionType().toString());
         }
+
         return this_id;
+    }
+
+    private void addMultipleChoiceQuestion(MultipleChoiceQuestion multipleChoiceQuestion, int this_id) {
+        ContentValues multipleChoiceValues = new ContentValues();
+
+        multipleChoiceValues.put(QUESTION_ID_COLUMN, this_id);
+        multipleChoiceValues.put(MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN, multipleChoiceQuestion.getSingleSelection());
+
+        addMultipleChoiceChoices(multipleChoiceQuestion, this_id);
+
+        contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_TABLE), multipleChoiceValues);
+    }
+
+    private void addMultipleChoiceChoices(MultipleChoiceQuestion multipleChoiceQuestion, int this_id) {
+        int choice_id = 0;
+        for (String choice : multipleChoiceQuestion.getChoices()) {
+            ContentValues choicesValues = new ContentValues();
+            choicesValues.put(QUESTION_ID_COLUMN, this_id);
+            choicesValues.put(MULTIPLE_CHOICE_CHOICES_CHOICE_ID_COLUMN, choice_id);
+            choice_id += 1;
+            choicesValues.put(MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN, choice);
+
+            contentResolver.insert(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_CHOICES_TABLE), choicesValues);
+        }
+    }
+
+    private void addNumberRangeQuestion(NumberRangeQuestion numberRangeQuestion, int this_id) {
+        ContentValues numberRangeValues = new ContentValues();
+
+        numberRangeValues.put(QUESTION_ID_COLUMN, this_id);
+        numberRangeValues.put(NUMBER_RANGE_MIN_COLUMN, numberRangeQuestion.getMin());
+        numberRangeValues.put(NUMBER_RANGE_MAX_COLUMN, numberRangeQuestion.getMax());
+        numberRangeValues.put(NUMBER_RANGE_MIN_LABEL_COLUMN, numberRangeQuestion.getMinLabel());
+        numberRangeValues.put(NUMBER_RANGE_MAX_LABEL_COLUMN, numberRangeQuestion.getMaxLabel());
+
+        contentResolver.insert(Uri.parse(MODULE_URI + NUMBER_RANGE_TABLE), numberRangeValues);
     }
 
     public void addMultipleChoiceAnswer(int question_id, Integer choice, boolean answered) {
