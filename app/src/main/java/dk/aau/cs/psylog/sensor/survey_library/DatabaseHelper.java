@@ -31,11 +31,16 @@ public class DatabaseHelper {
     private static final String QUESTION_TYPE_ID_COLUMN = "question_type_id";
     private static final String QUESTION_TEXT_COLUMN = "question_text";
 
+    private static final String MULTIPLE_CHOICE_QUESTION_ID_COLUMN = "question_id";
     private static final String MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN = "single_selection";
+
     private static final String MULTIPLE_CHOICE_ANSWER_CHOICE_COLUMN = "multiple_choice_choice";
+
+    private static final String MULTIPLE_CHOICE_CHOICES_QUESTION_ID_COLUMN = "question_id";
     private static final String MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN = "choice_text";
     private static final String MULTIPLE_CHOICE_CHOICES_CHOICE_ID_COLUMN = "choice_id";
 
+    private static final String NUMBER_RANGE_QUESTION_ID_COLUMN = "question_id";
     private static final String NUMBER_RANGE_MIN_COLUMN = "min";
     private static final String NUMBER_RANGE_MAX_COLUMN = "max";
     private static final String NUMBER_RANGE_MIN_LABEL_COLUMN = "min_label";
