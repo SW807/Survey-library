@@ -97,13 +97,20 @@ public class Scheduler implements ISensor {
         @Override
         public void run() {
             while (true) {
-                sleep();
+                //Handles when the service is stopped from the Psylog SettingsActivity
+                try {
+                    sleep();
+                } catch (InterruptedException e) {
+                    //Clear alle notifkationer??
+                    return;
+                }
                 IScheduled task = tasks.get(0);
 
                 // Show question or other activity
                 NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                 mNotifyMgr.notify(task.getId(), task.getNotification(context));
 
+                Log.d("ID", task.getId()+"");
 
                 //Update task
                 task.updateTime();
@@ -111,10 +118,10 @@ public class Scheduler implements ISensor {
             }
         }
 
-        private void sleep() {
+        private void sleep() throws InterruptedException {
             Long diff = tasks.get(0).getTime() - new Date().getTime();
             if (diff > 0)
-                SystemClock.sleep(diff);
+                Thread.sleep(diff);
         }
     }
 
