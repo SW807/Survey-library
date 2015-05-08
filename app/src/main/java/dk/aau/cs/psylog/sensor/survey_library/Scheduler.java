@@ -24,7 +24,6 @@ public class Scheduler implements ISensor {
     public Scheduler(Context context) {
         this.context = context;
 
-        Log.d(TAG, "startSensor");
         tasks = new ArrayList();
         initialize();
         sortAfterTime();
@@ -75,13 +74,7 @@ public class Scheduler implements ISensor {
 
     @Override
     public void startSensor() {
-        Log.d(TAG, "startSensor");
-        tasks = new ArrayList();
-        initialize();
-        sortAfterTime();
 
-        thread = new Thread(new RunTask(context));
-        thread.start();
     }
 
     @Override
@@ -118,7 +111,6 @@ public class Scheduler implements ISensor {
                 NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                 mNotifyMgr.notify(task.getId(), task.getNotification(context));
 
-                Log.d("ID", task.getId()+"");
 
                 //Update task
                 task.updateTime();
