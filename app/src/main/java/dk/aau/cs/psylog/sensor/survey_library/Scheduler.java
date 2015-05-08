@@ -98,17 +98,17 @@ public class Scheduler implements ISensor {
         @Override
         public void run() {
             while (true) {
+                NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+
                 //Handles when the service is stopped from the Psylog SettingsActivity
                 try {
                     sleep();
                 } catch (InterruptedException e) {
-                    //Clear alle notifkationer??
+                    mNotifyMgr.cancelAll();
                     return;
                 }
                 IScheduled task = tasks.get(0);
 
-                // Show question or other activity
-                NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                 mNotifyMgr.notify(task.getId(), task.getNotification(context));
 
 
