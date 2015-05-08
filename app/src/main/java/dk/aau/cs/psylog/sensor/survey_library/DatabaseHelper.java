@@ -252,9 +252,10 @@ public class DatabaseHelper {
         Cursor cursor = contentResolver.query(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_CHOICES_TABLE), null, MULTIPLE_CHOICE_CHOICES_QUESTION_ID_COLUMN + "= ?", new String[]{"" + questionId}, MULTIPLE_CHOICE_CHOICES_CHOICE_ID_COLUMN);
         if (cursor.moveToFirst()) {
             ArrayList<String> choices = new ArrayList<>();
-            while (cursor.moveToNext()) {
+            do
                 choices.add(cursor.getString(cursor.getColumnIndex(MULTIPLE_CHOICE_CHOICES_CHOICE_TEXT_COLUMN)));
-            }
+            while (cursor.moveToNext());
+
             return choices.toArray(new String[choices.size()]);
         }
         throw new CursorIndexOutOfBoundsException("Cursor has no rows for questionId: " + questionId);
