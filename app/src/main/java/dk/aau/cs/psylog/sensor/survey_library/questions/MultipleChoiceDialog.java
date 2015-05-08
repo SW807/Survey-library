@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import dk.aau.cs.psylog.sensor.survey_library.Constants;
-import dk.aau.cs.psylog.sensor.survey_library.DatabaseHelper;
+import dk.aau.cs.psylog.sensor.survey_library.database.DatabaseHelper;
 
 public class MultipleChoiceDialog extends DialogFragment {
 

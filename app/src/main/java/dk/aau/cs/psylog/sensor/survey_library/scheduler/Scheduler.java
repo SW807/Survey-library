@@ -1,4 +1,4 @@
-package dk.aau.cs.psylog.sensor.survey_library;
+package dk.aau.cs.psylog.sensor.survey_library.scheduler;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.Date;
 
 import dk.aau.cs.psylog.module_lib.ISensor;
+import dk.aau.cs.psylog.sensor.survey_library.database.DatabaseHelper;
 import dk.aau.cs.psylog.sensor.survey_library.questions.MultipleChoiceQuestion;
 import dk.aau.cs.psylog.sensor.survey_library.questions.NumberRangeQuestion;
 import dk.aau.cs.psylog.sensor.survey_library.questions.PlainTextQuestion;

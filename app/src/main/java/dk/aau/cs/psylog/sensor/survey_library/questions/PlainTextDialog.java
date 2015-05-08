@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import dk.aau.cs.psylog.sensor.survey_library.Constants;
-import dk.aau.cs.psylog.sensor.survey_library.DatabaseHelper;
+import dk.aau.cs.psylog.sensor.survey_library.database.DatabaseHelper;
 import dk.aau.cs.psylog.survey_library.R;
 
 public class PlainTextDialog extends DialogFragment {

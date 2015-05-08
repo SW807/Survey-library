@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import dk.aau.cs.psylog.sensor.survey_library.Constants;
-import dk.aau.cs.psylog.sensor.survey_library.IScheduled;
+import dk.aau.cs.psylog.sensor.survey_library.scheduler.IScheduled;
 
 public abstract class Question implements IScheduled {
     private int id;

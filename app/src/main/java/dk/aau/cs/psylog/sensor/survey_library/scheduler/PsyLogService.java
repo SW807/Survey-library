@@ -1,4 +1,4 @@
-package dk.aau.cs.psylog.sensor.survey_library;
+package dk.aau.cs.psylog.sensor.survey_library.scheduler;
 
 import android.util.Log;
 

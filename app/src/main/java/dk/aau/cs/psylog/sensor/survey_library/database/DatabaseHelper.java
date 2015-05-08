@@ -1,4 +1,4 @@
-package dk.aau.cs.psylog.sensor.survey_library;
+package dk.aau.cs.psylog.sensor.survey_library.database;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
