@@ -46,7 +46,7 @@ public class NumberRangeQuestion extends Question {
     @Override
     public void updateTime() {
         Calendar now = Calendar.getInstance();
-        now.add(Calendar.SECOND, 5);
+        now.add(Calendar.SECOND, 10);
         time = now.getTimeInMillis();
     }
 

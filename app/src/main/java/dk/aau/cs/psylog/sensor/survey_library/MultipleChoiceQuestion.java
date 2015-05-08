@@ -36,7 +36,7 @@ public class MultipleChoiceQuestion extends Question {
     @Override
     public void updateTime() {
         Calendar now = Calendar.getInstance();
-        now.add(Calendar.SECOND, 10);
+        now.add(Calendar.SECOND, 15);
         time = now.getTimeInMillis();
     }
 
