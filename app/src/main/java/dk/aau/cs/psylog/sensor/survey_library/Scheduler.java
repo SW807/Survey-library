@@ -40,19 +40,16 @@ public class Scheduler implements ISensor {
 
         if (initializeDB) {
 
-            MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er det du skal svare på.", true, new String[]{"Option 1", "Option 2"},0);
-            MultipleChoiceQuestion multipleChoiceQuestion2 = new MultipleChoiceQuestion("MULTI - Her er det du skal svare på.", false, new String[]{"Option 1", "Option 2", "Option 3", "Option 4"},1);
-            PlainTextQuestion plaintext1 = new PlainTextQuestion("Skriv en bog1", 2);
-            PlainTextQuestion plaintext2 = new PlainTextQuestion("Skriv en bog2", 3);
-            NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Hvor glad er du?", 1, 10, "Ked af det", "Rigtig glad",3);
+            MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er et multiplechoice spørgsmål, vælg en", true, new String[]{"Valgmulighed 1", "Valgmulighed 2"},0);
+            MultipleChoiceQuestion multipleChoiceQuestion2 = new MultipleChoiceQuestion("Her er et multiplechoice spørgsmål, vælg flere.", false, new String[]{"Valgmulighed 1", "Valgmulighed 2","Valgmulighed 3", "Valgmulighed 4"},1);
+            PlainTextQuestion plaintext1 = new PlainTextQuestion("Tekst spørgsmål, eksempelvis dagbog", 2);
+            NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Spørgsmål med skala", 1, 10, "Laveste mulighed", "Højeste mulighed",3);
 
 
-            multipleChoiceQuestion.setId(databaseHelper.addQuestion(multipleChoiceQuestion));
-            multipleChoiceQuestion2.setId(databaseHelper.addQuestion(multipleChoiceQuestion2));
-
-            plaintext2.setId(databaseHelper.addQuestion(plaintext2));
-            plaintext1.setId(databaseHelper.addQuestion(plaintext1));
-            numberRangeQuestion.setId(databaseHelper.addQuestion(numberRangeQuestion));
+            databaseHelper.addQuestion(multipleChoiceQuestion);
+            databaseHelper.addQuestion(multipleChoiceQuestion2);
+            databaseHelper.addQuestion(plaintext1);
+            databaseHelper.addQuestion(numberRangeQuestion);
         }
         tasks.addAll(databaseHelper.getQuestions());
     }
