@@ -10,6 +10,11 @@ import android.net.Uri;
 import java.util.ArrayList;
 
 import dk.aau.cs.psylog.module_lib.DBAccessContract;
+import dk.aau.cs.psylog.sensor.survey_library.questions.MultipleChoiceQuestion;
+import dk.aau.cs.psylog.sensor.survey_library.questions.NumberRangeQuestion;
+import dk.aau.cs.psylog.sensor.survey_library.questions.PlainTextQuestion;
+import dk.aau.cs.psylog.sensor.survey_library.questions.Question;
+import dk.aau.cs.psylog.sensor.survey_library.questions.QuestionType;
 
 public class DatabaseHelper {
     private Context context;

@@ -12,7 +12,7 @@
             android:exported="true" />
 
         <activity
-            android:name="dk.aau.cs.psylog.sensor.survey_library.TransparentActivity"
+            android:name="dk.aau.cs.psylog.sensor.survey_library.questions.TransparentActivity"
             android:label="@string/title_activity_transparent"
             android:theme="@style/Theme.Transparent"></activity>
 

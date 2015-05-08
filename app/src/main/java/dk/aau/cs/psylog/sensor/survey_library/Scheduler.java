@@ -1,12 +1,8 @@
 package dk.aau.cs.psylog.sensor.survey_library;
 
 import android.app.NotificationManager;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
-import android.os.SystemClock;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +10,9 @@ import java.util.Comparator;
 import java.util.Date;
 
 import dk.aau.cs.psylog.module_lib.ISensor;
+import dk.aau.cs.psylog.sensor.survey_library.questions.MultipleChoiceQuestion;
+import dk.aau.cs.psylog.sensor.survey_library.questions.NumberRangeQuestion;
+import dk.aau.cs.psylog.sensor.survey_library.questions.PlainTextQuestion;
 
 public class Scheduler implements ISensor {
     String TAG = "SurveyScheduler";
