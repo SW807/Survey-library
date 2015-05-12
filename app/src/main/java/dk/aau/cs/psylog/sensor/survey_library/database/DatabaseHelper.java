@@ -14,6 +14,7 @@ import dk.aau.cs.psylog.sensor.survey_library.questions.MultipleChoiceQuestion;
 import dk.aau.cs.psylog.sensor.survey_library.questions.NumberRangeQuestion;
 import dk.aau.cs.psylog.sensor.survey_library.questions.PlainTextQuestion;
 import dk.aau.cs.psylog.sensor.survey_library.questions.Question;
+import dk.aau.cs.psylog.sensor.survey_library.questions.QuestionTime;
 import dk.aau.cs.psylog.sensor.survey_library.questions.QuestionType;
 
 public class DatabaseHelper {
@@ -30,6 +31,7 @@ public class DatabaseHelper {
     private static final String NUMBER_RANGE_ANSWER_TABLE = "number_range_answer";
     private static final String PLAIN_TEXT_TABLE = "plain_text";
     private static final String PLAIN_TEXT_ANSWER_TABLE = "plain_text_answer";
+    private static final String QUESTION_TIMES_TABLE = "question_times";
 
 
     private static final String QUESTION_ID_COLUMN = "question_id";
@@ -63,6 +65,12 @@ public class DatabaseHelper {
 
     private static final String PLAIN_TEXT_ANSWER_ANSWER_ID_COLUMN = "answer_id";
     private static final String PLAIN_TEXT_ANSWER_ANSWER_COLUMN = "answer";
+
+    private static final String QUESTION_TIMES_QUESTION_ID_COLUMN = "question_id";
+    private static final String QUESTION_TIMES_START_COLUMN = "start_time";
+    private static final String QUESTION_TIMES_INTERVAL_COLUMN = "interval";
+    private static final String QUESTION_TIMES_ALLOWED_HOUR_START_COLUMN = "allowed_hour_start";
+    private static final String QUESTION_TIMES_ALLOWED_HOUR_END_COLUMN  = "allowed_hour_end";
 
     public DatabaseHelper(Context context) {
         this.context = context;
@@ -215,7 +223,7 @@ public class DatabaseHelper {
             QuestionType questionType = QuestionType.values()[cursor.getInt(cursor.getColumnIndex(QUESTION_TYPE_ID_COLUMN))];
             switch (questionType) {
                 case PLAIN_TEXT:
-                    questions.add(new PlainTextQuestion(questionText, questionId));
+                    questions.add(new PlainTextQuestion(questionText, questionId, getQuestionTime(questionId)));
                     break;
                 case NUMBER_RANGE:
                     questions.add(initializeNumberRangeQuestion(questionText, questionId));
@@ -240,7 +248,7 @@ public class DatabaseHelper {
                     cursor.getInt(cursor.getColumnIndex(NUMBER_RANGE_MAX_COLUMN)),
                     cursor.getString(cursor.getColumnIndex(NUMBER_RANGE_MIN_LABEL_COLUMN)),
                     cursor.getString(cursor.getColumnIndex(NUMBER_RANGE_MAX_LABEL_COLUMN)),
-                    questionId);
+                    questionId, getQuestionTime(questionId));
         }
         throw new CursorIndexOutOfBoundsException("Cursor has no rows for questionId: " + questionId);
     }
@@ -248,7 +256,8 @@ public class DatabaseHelper {
     private MultipleChoiceQuestion initializeMultipleChoiceQuestion(String questionText, int questionId) {
         Cursor cursor = contentResolver.query(Uri.parse(MODULE_URI + MULTIPLE_CHOICE_TABLE), null, MULTIPLE_CHOICE_QUESTION_ID_COLUMN + "= ?", new String[]{"" + questionId}, null);
         if (cursor.moveToFirst()) {
-            return new MultipleChoiceQuestion(questionText, (1 == cursor.getInt(cursor.getColumnIndex(MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN))), getMultipleChoiceChoices(questionId), questionId);
+            return new MultipleChoiceQuestion(questionText, (1 == cursor.getInt(cursor.getColumnIndex(MULTIPLE_CHOICE_SINGLESELELECTION_COLUMN))),
+                    getMultipleChoiceChoices(questionId), questionId, getQuestionTime(questionId));
         }
         throw new CursorIndexOutOfBoundsException("Cursor has no rows for questionId: " + questionId);
     }
@@ -262,6 +271,17 @@ public class DatabaseHelper {
             while (cursor.moveToNext());
 
             return choices.toArray(new String[choices.size()]);
+        }
+        throw new CursorIndexOutOfBoundsException("Cursor has no rows for questionId: " + questionId);
+    }
+
+    private QuestionTime getQuestionTime(int questionId){
+        Cursor cursor = contentResolver.query(Uri.parse(MODULE_URI+QUESTION_TIMES_TABLE), null, QUESTION_TIMES_QUESTION_ID_COLUMN + "= ?", new String[]{""+questionId}, null);
+        if (cursor.moveToFirst()){
+            return new QuestionTime(cursor.getString(cursor.getColumnIndex(QUESTION_TIMES_START_COLUMN)),
+                    cursor.getInt(cursor.getColumnIndex(QUESTION_TIMES_INTERVAL_COLUMN)),
+                    cursor.getInt(cursor.getColumnIndex(QUESTION_TIMES_ALLOWED_HOUR_START_COLUMN)),
+                    cursor.getInt(cursor.getColumnIndex(QUESTION_TIMES_ALLOWED_HOUR_END_COLUMN)));
         }
         throw new CursorIndexOutOfBoundsException("Cursor has no rows for questionId: " + questionId);
     }
