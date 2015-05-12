@@ -12,12 +12,25 @@ public abstract class Question implements IScheduled {
     private int id;
     private String text;
     private QuestionType questionType;
+    private QuestionTime questionTime;
+    protected Long time;
 
-    public Question(String text, QuestionType questionType, int id) {
+    public Question(String text, QuestionType questionType, int id, QuestionTime questionTime) {
         this.text = text;
         this.questionType = questionType;
         this.id = id;
+        this.questionTime = questionTime;
         updateTime();
+    }
+
+    @Override
+    public Long getTime() {
+        return time;
+    }
+
+    @Override
+    public void updateTime() {
+        time = questionTime.calculateNextTime(time);
     }
 
     public QuestionType getQuestionType() {
