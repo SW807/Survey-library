@@ -11,8 +11,8 @@ import dk.aau.cs.psylog.sensor.survey_library.Constants;
 
 public class PlainTextQuestion extends Question {
 
-    public PlainTextQuestion(String text, int id) {
-        super(text, QuestionType.PLAIN_TEXT, id);
+    public PlainTextQuestion(String text, int id, QuestionTime questionTime) {
+        super(text, QuestionType.PLAIN_TEXT, id, questionTime);
     }
 
     @Override
