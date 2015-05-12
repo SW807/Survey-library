@@ -143,7 +143,8 @@
         },
         {
           "name": "start_time",
-          "dataType": "REAL"
+          "dataType": "TEXT",
+          "_unit": "Time in HH:mm format"
         },
         {
           "name": "interval",
