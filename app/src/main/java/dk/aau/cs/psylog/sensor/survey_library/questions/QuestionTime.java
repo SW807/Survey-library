@@ -7,7 +7,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QuestionTime {
+    public Pair<Integer, Integer> getStartTime() {
+        return startTime;
+    }
+
     private Pair<Integer, Integer> startTime;
+
+    public int getInterval() {
+        return interval;
+    }
+
+    public int getAllowedHourStart() {
+        return allowedHourStart;
+    }
+
+    public int getAllowedHourEnd() {
+        return allowedHourEnd;
+    }
+
     private int interval;
     private int allowedHourStart;
     private int allowedHourEnd;

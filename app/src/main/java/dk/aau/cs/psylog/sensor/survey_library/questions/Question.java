@@ -66,4 +66,8 @@ public abstract class Question implements IScheduled {
     }
 
     public abstract void addQuestionData(Intent i);
+
+    public QuestionTime getQuestionTime() {
+        return questionTime;
+    }
 }
