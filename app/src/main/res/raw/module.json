@@ -133,6 +133,34 @@
           "dataType": "INTEGER"
         }
       ]
+    },
+    {
+      "name": "question_times",
+      "columns": [
+        {
+          "name": "question_id",
+          "dataType": "INTEGER"
+        },
+        {
+          "name": "start_time",
+          "dataType": "REAL"
+        },
+        {
+          "name": "interval",
+          "dataType": "REAL",
+          "nullable": true
+        },
+        {
+          "name": "allowed_hour_start",
+          "dataType": "REAL",
+          "nullable": true
+        },
+        {
+          "name": "allowed_hour_end",
+          "dataType": "REAL",
+          "nullable": true
+        }
+      ]
     }
   ]
 }
