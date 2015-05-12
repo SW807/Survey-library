@@ -16,8 +16,8 @@ public class NumberRangeQuestion extends Question {
     private String maxLabel;
     private Long time;
 
-    public NumberRangeQuestion(String text, int min, int max, String minLabel, String maxLabel, int id) {
-        super(text, QuestionType.NUMBER_RANGE, id);
+    public NumberRangeQuestion(String text, int min, int max, String minLabel, String maxLabel, int id, QuestionTime questionTime) {
+        super(text, QuestionType.NUMBER_RANGE, id, questionTime);
         this.min = min;
         this.max = max;
         this.minLabel = minLabel;

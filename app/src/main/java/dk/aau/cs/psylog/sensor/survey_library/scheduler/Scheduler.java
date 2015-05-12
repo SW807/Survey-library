@@ -14,6 +14,7 @@ import dk.aau.cs.psylog.sensor.survey_library.database.DatabaseHelper;
 import dk.aau.cs.psylog.sensor.survey_library.questions.MultipleChoiceQuestion;
 import dk.aau.cs.psylog.sensor.survey_library.questions.NumberRangeQuestion;
 import dk.aau.cs.psylog.sensor.survey_library.questions.PlainTextQuestion;
+import dk.aau.cs.psylog.sensor.survey_library.questions.QuestionTime;
 
 public class Scheduler implements ISensor {
     String TAG = "SurveyScheduler";
@@ -40,10 +41,10 @@ public class Scheduler implements ISensor {
 
         if (initializeDB) {
 
-            MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er et multiplechoice spørgsmål, vælg en", true, new String[]{"Valgmulighed 1", "Valgmulighed 2"},0);
-            MultipleChoiceQuestion multipleChoiceQuestion2 = new MultipleChoiceQuestion("Her er et multiplechoice spørgsmål, vælg flere.", false, new String[]{"Valgmulighed 1", "Valgmulighed 2","Valgmulighed 3", "Valgmulighed 4"},1);
-            PlainTextQuestion plaintext1 = new PlainTextQuestion("Tekst spørgsmål, eksempelvis dagbog", 2);
-            NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Spørgsmål med skala", 1, 10, "Laveste mulighed", "Højeste mulighed",3);
+            MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("Her er et multiplechoice spørgsmål, vælg en", true, new String[]{"Valgmulighed 1", "Valgmulighed 2"},0, new QuestionTime("20:00", 0, 0, 0));
+            MultipleChoiceQuestion multipleChoiceQuestion2 = new MultipleChoiceQuestion("Her er et multiplechoice spørgsmål, vælg flere.", false, new String[]{"Valgmulighed 1", "Valgmulighed 2","Valgmulighed 3", "Valgmulighed 4"},1, new QuestionTime("07:00", 6*60, 6, 21));
+            PlainTextQuestion plaintext1 = new PlainTextQuestion("Tekst spørgsmål, eksempelvis dagbog", 2, new QuestionTime("07:00", 13*60, 7, 20));
+            NumberRangeQuestion numberRangeQuestion = new NumberRangeQuestion("Spørgsmål med skala", 1, 10, "Laveste mulighed", "Højeste mulighed",3, new QuestionTime("07:00", 6*60, 6, 21));
 
 
             databaseHelper.addQuestion(multipleChoiceQuestion);

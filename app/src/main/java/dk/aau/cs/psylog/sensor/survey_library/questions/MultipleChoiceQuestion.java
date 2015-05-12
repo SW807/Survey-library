@@ -15,8 +15,8 @@ public class MultipleChoiceQuestion extends Question {
     private Long time;
 
 
-    public MultipleChoiceQuestion(String text, boolean singleSelection, String[] choices, int id) {
-        super(text, QuestionType.MULTIPLE_CHOICE, id);
+    public MultipleChoiceQuestion(String text, boolean singleSelection, String[] choices, int id, QuestionTime questionTime) {
+        super(text, QuestionType.MULTIPLE_CHOICE, id, questionTime);
         this.singleSelection = singleSelection;
         this.choices = choices;
     }
