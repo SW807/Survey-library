@@ -99,6 +99,8 @@ public class DatabaseHelper {
 
         contentResolver.insert(Uri.parse(MODULE_URI + QUESTIONS_TABLE), contentValues);
 
+        addQuestionTime(this_id, q.getQuestionTime());
+
         switch (q.getQuestionType()) {
 
             case PLAIN_TEXT:
@@ -284,5 +286,16 @@ public class DatabaseHelper {
                     cursor.getInt(cursor.getColumnIndex(QUESTION_TIMES_ALLOWED_HOUR_END_COLUMN)));
         }
         throw new CursorIndexOutOfBoundsException("Cursor has no rows for questionId: " + questionId);
+    }
+
+    private void addQuestionTime(int questionId, QuestionTime questionTime){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(QUESTION_TIMES_QUESTION_ID_COLUMN, questionId);
+        contentValues.put(QUESTION_TIMES_START_COLUMN, (questionTime.getStartTime().first + ":") + questionTime.getStartTime().second);
+        contentValues.put(QUESTION_TIMES_INTERVAL_COLUMN, questionTime.getInterval());
+        contentValues.put(QUESTION_TIMES_ALLOWED_HOUR_START_COLUMN, questionTime.getAllowedHourStart());
+        contentValues.put(QUESTION_TIMES_ALLOWED_HOUR_END_COLUMN, questionTime.getAllowedHourEnd());
+
+        contentResolver.insert(Uri.parse(MODULE_URI+QUESTION_TIMES_TABLE),  contentValues);
     }
 }
