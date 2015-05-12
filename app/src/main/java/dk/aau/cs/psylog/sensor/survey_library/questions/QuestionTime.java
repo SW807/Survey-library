@@ -27,7 +27,7 @@ public class QuestionTime {
             prev.add(Calendar.MINUTE, interval);
 
         int hour = prev.get(Calendar.HOUR_OF_DAY);
-        if (hour < allowedHourStart || hour > allowedHourEnd) {
+        if (!(allowedHourStart>0 || allowedHourEnd>0) && (hour < allowedHourStart || hour > allowedHourEnd)) {
             prev.set(Calendar.HOUR_OF_DAY, startTime.first);
             prev.set(Calendar.MINUTE, startTime.second);
         }
