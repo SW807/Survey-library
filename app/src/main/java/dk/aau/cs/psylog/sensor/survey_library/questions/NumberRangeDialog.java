@@ -70,12 +70,15 @@ public class NumberRangeDialog extends DialogFragment {
     }
 
     private void setSeekBar(final int min, int max, View view) {
+        final TextView seekbarValue = (TextView)view.findViewById(R.id.seekbarValue);
+        seekbarValue.setText(min+"");
         SeekBar seekBar = (SeekBar) view.findViewById(R.id.seekBar);
         seekBar.setMax(max - min);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 answer = progress + min;
+                seekbarValue.setText(progress+min+"");
             }
 
             @Override

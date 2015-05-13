@@ -21,6 +21,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             />
+        <TextView
+            android:id="@+id/seekbarValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/maxLabel"
