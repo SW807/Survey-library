@@ -1,5 +1,6 @@
 package dk.aau.cs.psylog.sensor.survey_library.questions;
 
+import android.util.Log;
 import android.util.Pair;
 
 import java.util.Calendar;
@@ -37,19 +38,61 @@ public class QuestionTime {
     }
 
     public Long calculateNextTime(Long time) {
-        Calendar prev = Calendar.getInstance();
-        prev.setTimeInMillis(time);
+        if (time==null) {
+            Calendar now = Calendar.getInstance();
+            time = now.getTimeInMillis();
+        }
+        //return time + 60*1000*60*24; //24 hours
+        return time + 10*1000;
 
-        if (interval > 0)
-            prev.add(Calendar.MINUTE, interval);
+        // The following needs more testing - but we have no time :(((((((
+        /*
+        Calendar nextTime = Calendar.getInstance();
 
-        int hour = prev.get(Calendar.HOUR_OF_DAY);
-        if (!(allowedHourStart>0 || allowedHourEnd>0) && (hour < allowedHourStart || hour > allowedHourEnd)) {
-            prev.set(Calendar.HOUR_OF_DAY, startTime.first);
-            prev.set(Calendar.MINUTE, startTime.second);
+        if(time==null) {
+            Calendar now = Calendar.getInstance();
+            nextTime.set(Calendar.HOUR_OF_DAY, startTime.first);
+            nextTime.set(Calendar.MINUTE, startTime.second);
+            Log.d("TIMEX", startTime.first + ":" + startTime.second);
+            Log.d("TIMEX", "nextTime wat " + nextTime.getTime().toString());
+            Long diff = now.getTimeInMillis() - nextTime.getTimeInMillis();
+            if (diff > 0){
+                nextTime.add(Calendar.DATE, 1);
+            }
+            Log.d("TIMEX", "time==null " + nextTime.getTime().toString());
+            return nextTime.getTimeInMillis();
         }
 
-        return prev.getTimeInMillis();
+        nextTime.setTimeInMillis(time);
+
+        Log.d("TIMEX", "nextTime = time " + nextTime.getTime().toString());
+
+        checkInterval(nextTime);
+
+        Log.d("TIMEX", "nextTime += interval " + nextTime.getTime().toString());
+
+        int hour = nextTime.get(Calendar.HOUR_OF_DAY);
+        if (allowedHourStart >= 0 && allowedHourEnd >= 0) {
+            if (hour < allowedHourEnd && hour > allowedHourStart){
+                checkInterval(nextTime);
+            }
+            else
+            {
+                nextTime.set(Calendar.HOUR_OF_DAY, startTime.first);
+                nextTime.set(Calendar.MINUTE, startTime.second);
+            }
+        }
+
+        Log.d("TIMEX", "nextTime = startTime " + nextTime.getTime().toString());
+
+        return nextTime.getTimeInMillis();*/
+    }
+
+    private void checkInterval(Calendar nextTime) {
+        if (interval > 0)
+            nextTime.add(Calendar.MINUTE, interval);
+        else if (interval <= 0)
+            nextTime.add(Calendar.HOUR_OF_DAY, 24);
     }
 
     private Pair<Integer,Integer> parseStartTime(String date) throws IllegalArgumentException
