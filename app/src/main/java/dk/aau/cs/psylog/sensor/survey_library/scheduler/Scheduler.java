@@ -34,7 +34,7 @@ public class Scheduler implements ISensor {
     }
 
     private void initialize() {
-        boolean initializeDB = false;
+        boolean initializeDB = true;
 
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
 
