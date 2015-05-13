@@ -289,9 +289,10 @@ public class DatabaseHelper {
     }
 
     private void addQuestionTime(int questionId, QuestionTime questionTime){
+        int startTimeSecond = questionTime.getStartTime().second;
         ContentValues contentValues = new ContentValues();
         contentValues.put(QUESTION_TIMES_QUESTION_ID_COLUMN, questionId);
-        contentValues.put(QUESTION_TIMES_START_COLUMN, (questionTime.getStartTime().first + ":") + questionTime.getStartTime().second);
+        contentValues.put(QUESTION_TIMES_START_COLUMN, (questionTime.getStartTime().first + ":") + (startTimeSecond < 10 ? "0" : "") + startTimeSecond);
         contentValues.put(QUESTION_TIMES_INTERVAL_COLUMN, questionTime.getInterval());
         contentValues.put(QUESTION_TIMES_ALLOWED_HOUR_START_COLUMN, questionTime.getAllowedHourStart());
         contentValues.put(QUESTION_TIMES_ALLOWED_HOUR_END_COLUMN, questionTime.getAllowedHourEnd());
